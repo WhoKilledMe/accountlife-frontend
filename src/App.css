@@ -1,0 +1,183 @@
+/* ========== Reset & 基础样式 ========== */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: #F5F5F7;
+  color: #1D1D1F;
+}
+
+/* 禁止全局强制居中（vite 默认） */
+#root {
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ========== 链接样式 ========== */
+a {
+  color: #1890ff;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+a:hover {
+  color: #40a9ff;
+}
+
+/* ========== 滚动条美化 ========== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* 暗色模式滚动条 */
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+}
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* ========== 通用布局优化 ========== */
+.ant-layout {
+  background: #F5F5F7 !important;
+}
+
+.ant-layout-header {
+  height: 64px !important;
+  line-height: 64px !important;
+  padding: 0 24px !important;
+}
+
+/* ========== 菜单优化 ========== */
+.ant-menu {
+  font-size: 14px;
+}
+.ant-menu-item-selected {
+  font-weight: 600;
+}
+
+/* ========== 页脚优化 ========== */
+.ant-layout-footer {
+  background: transparent !important;
+  color: #86868B !important;
+  font-size: 12px;
+  border-top: 1px solid #E5E5E7;
+  padding: 16px 24px !important;
+  text-align: center;
+  height: 40px !important;
+  line-height: 8px !important;
+}
+
+/* ========== 表格 & 卡片 ========== */
+.ant-table {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.ant-card {
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* ========== 按钮和输入框优化 ========== */
+.ant-btn {
+  border-radius: 6px;
+  font-weight: 500;
+}
+.ant-input {
+  border-radius: 6px;
+}
+.ant-select-selector {
+  border-radius: 6px !important;
+}
+
+/* ========== 暗色模式适配 ========== */
+[data-theme="dark"] {
+  background-color: #141414;
+  color: #FFFFFF;
+}
+
+[data-theme="dark"] .ant-layout {
+  background: #141414 !important;
+}
+
+[data-theme="dark"] .ant-layout-footer {
+  border-top: 1px solid #303030 !important;
+  color: #A6A6A6 !important;
+}
+
+[data-theme="dark"] .ant-table {
+  background: #1F1F1F;
+}
+
+[data-theme="dark"] .ant-card {
+  background: #1F1F1F;
+  box-shadow: 0 1px 3px rgba(255, 255, 255, 0.1);
+}
+
+/* ========== 响应式优化 ========== */
+@media (max-width: 768px) {
+  .ant-layout-sider {
+    position: fixed !important;
+    z-index: 1001;
+    height: 100vh;
+  }
+  
+  .ant-layout-content {
+    margin: 16px !important;
+    padding: 16px !important;
+  }
+}
+
+/* ========== 动画效果 ========== */
+.ant-layout-sider {
+  transition: all 0.2s ease;
+}
+
+.ant-menu-item {
+  transition: all 0.2s ease;
+}
+
+.ant-btn {
+  transition: all 0.2s ease;
+}
+
+/* ========== 工具类 ========== */
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.mb-16 {
+  margin-bottom: 16px;
+}
+
+.mb-24 {
+  margin-bottom: 24px;
+}
+
+.mt-16 {
+  margin-top: 16px;
+}
+
+.mt-24 {
+  margin-top: 24px;
+}

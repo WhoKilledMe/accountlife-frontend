@@ -1,0 +1,5656 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+      "title": "个人资产管理系统",
+      "version": "1.0.0"
+  },
+  "servers": [
+      {
+          "url": "http://localhost:8081",
+          "description": "Generated server url"
+      }
+  ],
+  "paths": {
+      "/api/user": {
+          "get": {
+              "tags": [
+                  "User 接口"
+              ],
+              "summary": "查询所有 User",
+              "operationId": "list",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "type": "array",
+                                  "items": {
+                                      "$ref": "#/components/schemas/UserDto"
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "put": {
+              "tags": [
+                  "User 接口"
+              ],
+              "summary": "更新 User",
+              "operationId": "update",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/UserDto"
+                          }
+                      }
+                  },
+                  "required": true
+              },
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/UserDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "post": {
+              "tags": [
+                  "User 接口"
+              ],
+              "summary": "创建 User",
+              "operationId": "create",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/UserDto"
+                          }
+                      }
+                  },
+                  "required": true
+              },
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/UserDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/usergroup": {
+          "get": {
+              "tags": [
+                  "UserGroup 接口"
+              ],
+              "summary": "查询所有 UserGroup",
+              "operationId": "list_1",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "type": "array",
+                                  "items": {
+                                      "$ref": "#/components/schemas/UserGroupDto"
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "put": {
+              "tags": [
+                  "UserGroup 接口"
+              ],
+              "summary": "更新 UserGroup",
+              "operationId": "update_1",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/UserGroupDto"
+                          }
+                      }
+                  },
+                  "required": true
+              },
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/UserGroupDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "post": {
+              "tags": [
+                  "UserGroup 接口"
+              ],
+              "summary": "创建 UserGroup",
+              "operationId": "create_1",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/UserGroupDto"
+                          }
+                      }
+                  },
+                  "required": true
+              },
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/UserGroupDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/usergroupmember": {
+          "get": {
+              "tags": [
+                  "UserGroupMember 接口"
+              ],
+              "summary": "查询所有 UserGroupMember",
+              "operationId": "list_2",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "type": "array",
+                                  "items": {
+                                      "$ref": "#/components/schemas/UserGroupMemberDto"
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "put": {
+              "tags": [
+                  "UserGroupMember 接口"
+              ],
+              "summary": "更新 UserGroupMember",
+              "operationId": "update_2",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/UserGroupMemberDto"
+                          }
+                      }
+                  },
+                  "required": true
+              },
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/UserGroupMemberDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "post": {
+              "tags": [
+                  "UserGroupMember 接口"
+              ],
+              "summary": "创建 UserGroupMember",
+              "operationId": "create_2",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/UserGroupMemberDto"
+                          }
+                      }
+                  },
+                  "required": true
+              },
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/UserGroupMemberDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/transactioncategory": {
+          "get": {
+              "tags": [
+                  "TransactionCategory 接口"
+              ],
+              "summary": "查询所有 TransactionCategory",
+              "operationId": "list_3",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "type": "array",
+                                  "items": {
+                                      "$ref": "#/components/schemas/TransactionCategoryDto"
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "put": {
+              "tags": [
+                  "TransactionCategory 接口"
+              ],
+              "summary": "更新 TransactionCategory",
+              "operationId": "update_3",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/TransactionCategoryDto"
+                          }
+                      }
+                  },
+                  "required": true
+              },
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/TransactionCategoryDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "post": {
+              "tags": [
+                  "TransactionCategory 接口"
+              ],
+              "summary": "创建 TransactionCategory",
+              "operationId": "create_3",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/TransactionCategoryDto"
+                          }
+                      }
+                  },
+                  "required": true
+              },
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/TransactionCategoryDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/platformtransaction": {
+          "get": {
+              "tags": [
+                  "PlatformTransaction 接口"
+              ],
+              "summary": "查询所有 PlatformTransaction",
+              "operationId": "list_4",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "type": "array",
+                                  "items": {
+                                      "$ref": "#/components/schemas/PlatformTransactionDto"
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "put": {
+              "tags": [
+                  "PlatformTransaction 接口"
+              ],
+              "summary": "更新 PlatformTransaction",
+              "operationId": "update_4",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/PlatformTransactionDto"
+                          }
+                      }
+                  },
+                  "required": true
+              },
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/PlatformTransactionDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "post": {
+              "tags": [
+                  "PlatformTransaction 接口"
+              ],
+              "summary": "创建 PlatformTransaction",
+              "operationId": "create_4",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/PlatformTransactionDto"
+                          }
+                      }
+                  },
+                  "required": true
+              },
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/PlatformTransactionDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/investmentasset": {
+          "get": {
+              "tags": [
+                  "InvestmentAsset 接口"
+              ],
+              "summary": "查询所有 InvestmentAsset",
+              "operationId": "list_5",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "type": "array",
+                                  "items": {
+                                      "$ref": "#/components/schemas/InvestmentAssetDto"
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "put": {
+              "tags": [
+                  "InvestmentAsset 接口"
+              ],
+              "summary": "更新 InvestmentAsset",
+              "operationId": "update_5",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/InvestmentAssetDto"
+                          }
+                      }
+                  },
+                  "required": true
+              },
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/InvestmentAssetDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "post": {
+              "tags": [
+                  "InvestmentAsset 接口"
+              ],
+              "summary": "创建 InvestmentAsset",
+              "operationId": "create_5",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/InvestmentAssetDto"
+                          }
+                      }
+                  },
+                  "required": true
+              },
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/InvestmentAssetDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/fixedasset": {
+          "get": {
+              "tags": [
+                  "FixedAsset 接口"
+              ],
+              "summary": "查询所有 FixedAsset",
+              "operationId": "list_6",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "type": "array",
+                                  "items": {
+                                      "$ref": "#/components/schemas/FixedAssetDto"
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "put": {
+              "tags": [
+                  "FixedAsset 接口"
+              ],
+              "summary": "更新 FixedAsset",
+              "operationId": "update_6",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/FixedAssetDto"
+                          }
+                      }
+                  },
+                  "required": true
+              },
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/FixedAssetDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "post": {
+              "tags": [
+                  "FixedAsset 接口"
+              ],
+              "summary": "创建 FixedAsset",
+              "operationId": "create_6",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/FixedAssetDto"
+                          }
+                      }
+                  },
+                  "required": true
+              },
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/FixedAssetDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/creditwalletstatement": {
+          "get": {
+              "tags": [
+                  "CreditWalletStatement 接口"
+              ],
+              "summary": "查询所有 CreditWalletStatement",
+              "operationId": "list_7",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "type": "array",
+                                  "items": {
+                                      "$ref": "#/components/schemas/CreditWalletStatementDto"
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "put": {
+              "tags": [
+                  "CreditWalletStatement 接口"
+              ],
+              "summary": "更新 CreditWalletStatement",
+              "operationId": "update_7",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/CreditWalletStatementDto"
+                          }
+                      }
+                  },
+                  "required": true
+              },
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/CreditWalletStatementDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "post": {
+              "tags": [
+                  "CreditWalletStatement 接口"
+              ],
+              "summary": "创建 CreditWalletStatement",
+              "operationId": "create_7",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/CreditWalletStatementDto"
+                          }
+                      }
+                  },
+                  "required": true
+              },
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/CreditWalletStatementDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/category-keywords/{id}": {
+          "put": {
+              "tags": [
+                  "category-keyword-mapping-controller"
+              ],
+              "operationId": "updateMapping",
+              "parameters": [
+                  {
+                      "name": "id",
+                      "in": "path",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/CategoryKeywordMapping"
+                          }
+                      }
+                  },
+                  "required": true
+              },
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiResponseCategoryKeywordMapping"
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "delete": {
+              "tags": [
+                  "category-keyword-mapping-controller"
+              ],
+              "operationId": "deleteMapping",
+              "parameters": [
+                  {
+                      "name": "id",
+                      "in": "path",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiResponseVoid"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/budget": {
+          "put": {
+              "tags": [
+                  "Budget 接口"
+              ],
+              "summary": "更新预算",
+              "operationId": "update_8",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/BudgetDto"
+                          }
+                      }
+                  },
+                  "required": true
+              },
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiResponseBudgetDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "post": {
+              "tags": [
+                  "Budget 接口"
+              ],
+              "summary": "创建预算",
+              "operationId": "create_8",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/BudgetDto"
+                          }
+                      }
+                  },
+                  "required": true
+              },
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiResponseBudgetDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/budget/{id}/used-amount": {
+          "put": {
+              "tags": [
+                  "Budget 接口"
+              ],
+              "summary": "更新预算使用金额",
+              "operationId": "updateUsedAmount",
+              "parameters": [
+                  {
+                      "name": "id",
+                      "in": "path",
+                      "description": "预算ID",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "usedAmount",
+                      "in": "query",
+                      "description": "已使用金额",
+                      "required": true,
+                      "schema": {
+                          "type": "number"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiResponseBudgetDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/budget/{id}/check-status": {
+          "put": {
+              "tags": [
+                  "Budget 接口"
+              ],
+              "summary": "检查预算状态",
+              "operationId": "checkBudgetStatus",
+              "parameters": [
+                  {
+                      "name": "id",
+                      "in": "path",
+                      "description": "预算ID",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiResponseBudgetDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/assetaccount": {
+          "get": {
+              "tags": [
+                  "AssetAccount 接口"
+              ],
+              "summary": "查询所有 AssetAccount",
+              "operationId": "list_8",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "type": "array",
+                                  "items": {
+                                      "$ref": "#/components/schemas/AssetAccountDto"
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "put": {
+              "tags": [
+                  "AssetAccount 接口"
+              ],
+              "summary": "更新 AssetAccount",
+              "operationId": "update_9",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/AssetAccountDto"
+                          }
+                      }
+                  },
+                  "required": true
+              },
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/AssetAccountDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "post": {
+              "tags": [
+                  "AssetAccount 接口"
+              ],
+              "summary": "创建 AssetAccount",
+              "operationId": "create_9",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/AssetAccountDto"
+                          }
+                      }
+                  },
+                  "required": true
+              },
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/AssetAccountDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/accounttransaction": {
+          "get": {
+              "tags": [
+                  "AccountTransaction 接口"
+              ],
+              "summary": "查询所有 AccountTransaction",
+              "operationId": "list_9",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "type": "array",
+                                  "items": {
+                                      "$ref": "#/components/schemas/AccountTransactionDto"
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "put": {
+              "tags": [
+                  "AccountTransaction 接口"
+              ],
+              "summary": "更新 AccountTransaction",
+              "operationId": "update_10",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/AccountTransactionDto"
+                          }
+                      }
+                  },
+                  "required": true
+              },
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/AccountTransactionDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "post": {
+              "tags": [
+                  "AccountTransaction 接口"
+              ],
+              "summary": "创建 AccountTransaction",
+              "operationId": "create_10",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/AccountTransactionDto"
+                          }
+                      }
+                  },
+                  "required": true
+              },
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/AccountTransactionDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/v1/file/upload": {
+          "post": {
+              "tags": [
+                  "file-controller"
+              ],
+              "operationId": "upload",
+              "parameters": [
+                  {
+                      "name": "type",
+                      "in": "query",
+                      "required": true,
+                      "schema": {
+                          "type": "string",
+                          "enum": [
+                              "NING_BO_CREDIT",
+                              "LABEL_DETAIL",
+                              "BANK",
+                              "PLATFORM",
+                              "CREDIT_WALLET"
+                          ]
+                      }
+                  },
+                  {
+                      "name": "accountName",
+                      "in": "query",
+                      "required": true,
+                      "schema": {
+                          "type": "string"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "requestBody": {
+                  "content": {
+                      "multipart/form-data": {
+                          "schema": {
+                              "required": [
+                                  "file"
+                              ],
+                              "type": "object",
+                              "properties": {
+                                  "file": {
+                                      "type": "string",
+                                      "format": "binary"
+                                  }
+                              }
+                          }
+                      }
+                  }
+              },
+              "responses": {
+                  "200": {
+                      "description": "OK"
+                  }
+              }
+          }
+      },
+      "/api/category-keywords": {
+          "post": {
+              "tags": [
+                  "category-keyword-mapping-controller"
+              ],
+              "operationId": "addMapping",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/CategoryKeywordMapping"
+                          }
+                      }
+                  },
+                  "required": true
+              },
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiResponseCategoryKeywordMapping"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/auth/logout": {
+          "post": {
+              "tags": [
+                  "Auth 接口"
+              ],
+              "summary": "登出，清理token",
+              "operationId": "logout",
+              "parameters": [
+                  {
+                      "name": "Authorization",
+                      "in": "header",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK"
+                  }
+              }
+          }
+      },
+      "/api/auth/login": {
+          "post": {
+              "tags": [
+                  "Auth 接口"
+              ],
+              "summary": "登录，返回token",
+              "operationId": "login",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/LoginReq"
+                          }
+                      }
+                  },
+                  "required": true
+              },
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/TokenResp"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/assetaccount/page": {
+          "post": {
+              "tags": [
+                  "AssetAccount 接口"
+              ],
+              "summary": "分页查询 AssetAccount（数据库分页+模糊搜索）",
+              "operationId": "page",
+              "parameters": [
+                  {
+                      "name": "page",
+                      "in": "query",
+                      "required": false,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32",
+                          "default": 0
+                      }
+                  },
+                  {
+                      "name": "size",
+                      "in": "query",
+                      "required": false,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32",
+                          "default": 10
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/AssetAccountDto"
+                          }
+                      }
+                  }
+              },
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/PageResponseAssetAccountDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/accounttransaction/page": {
+          "post": {
+              "tags": [
+                  "AccountTransaction 接口"
+              ],
+              "summary": "分页查询 AccountTransaction（数据库分页+模糊搜索）",
+              "operationId": "page_1",
+              "parameters": [
+                  {
+                      "name": "page",
+                      "in": "query",
+                      "required": false,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32",
+                          "default": 0
+                      }
+                  },
+                  {
+                      "name": "size",
+                      "in": "query",
+                      "required": false,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32",
+                          "default": 10
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/AccountTransactionDto"
+                          }
+                      }
+                  }
+              },
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/PageResponseAccountTransactionDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/usergroupmember/{id}": {
+          "get": {
+              "tags": [
+                  "UserGroupMember 接口"
+              ],
+              "summary": "根据 ID 查询 UserGroupMember",
+              "operationId": "get",
+              "parameters": [
+                  {
+                      "name": "id",
+                      "in": "path",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/UserGroupMemberDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "delete": {
+              "tags": [
+                  "UserGroupMember 接口"
+              ],
+              "summary": "删除 UserGroupMember",
+              "operationId": "delete",
+              "parameters": [
+                  {
+                      "name": "id",
+                      "in": "path",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK"
+                  }
+              }
+          }
+      },
+      "/api/usergroupmember/page": {
+          "get": {
+              "tags": [
+                  "UserGroupMember 接口"
+              ],
+              "summary": "分页查询 UserGroupMember",
+              "operationId": "page_2",
+              "parameters": [
+                  {
+                      "name": "page",
+                      "in": "query",
+                      "required": false,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32",
+                          "default": 0
+                      }
+                  },
+                  {
+                      "name": "size",
+                      "in": "query",
+                      "required": false,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32",
+                          "default": 10
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/PageResponseUserGroupMemberDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/usergroup/{id}": {
+          "get": {
+              "tags": [
+                  "UserGroup 接口"
+              ],
+              "summary": "根据 ID 查询 UserGroup",
+              "operationId": "get_1",
+              "parameters": [
+                  {
+                      "name": "id",
+                      "in": "path",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/UserGroupDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "delete": {
+              "tags": [
+                  "UserGroup 接口"
+              ],
+              "summary": "删除 UserGroup",
+              "operationId": "delete_1",
+              "parameters": [
+                  {
+                      "name": "id",
+                      "in": "path",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK"
+                  }
+              }
+          }
+      },
+      "/api/usergroup/page": {
+          "get": {
+              "tags": [
+                  "UserGroup 接口"
+              ],
+              "summary": "分页查询 UserGroup",
+              "operationId": "page_3",
+              "parameters": [
+                  {
+                      "name": "page",
+                      "in": "query",
+                      "required": false,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32",
+                          "default": 0
+                      }
+                  },
+                  {
+                      "name": "size",
+                      "in": "query",
+                      "required": false,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32",
+                          "default": 10
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/PageResponseUserGroupDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/user/{id}": {
+          "get": {
+              "tags": [
+                  "User 接口"
+              ],
+              "summary": "根据 ID 查询 User",
+              "operationId": "get_2",
+              "parameters": [
+                  {
+                      "name": "id",
+                      "in": "path",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/UserDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "delete": {
+              "tags": [
+                  "User 接口"
+              ],
+              "summary": "删除 User",
+              "operationId": "delete_2",
+              "parameters": [
+                  {
+                      "name": "id",
+                      "in": "path",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK"
+                  }
+              }
+          }
+      },
+      "/api/user/page": {
+          "get": {
+              "tags": [
+                  "User 接口"
+              ],
+              "summary": "分页查询 User",
+              "operationId": "page_4",
+              "parameters": [
+                  {
+                      "name": "page",
+                      "in": "query",
+                      "required": false,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32",
+                          "default": 0
+                      }
+                  },
+                  {
+                      "name": "size",
+                      "in": "query",
+                      "required": false,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32",
+                          "default": 10
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/PageResponseUserDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/transactioncategory/{id}": {
+          "get": {
+              "tags": [
+                  "TransactionCategory 接口"
+              ],
+              "summary": "根据 ID 查询 TransactionCategory",
+              "operationId": "get_3",
+              "parameters": [
+                  {
+                      "name": "id",
+                      "in": "path",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/TransactionCategoryDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "delete": {
+              "tags": [
+                  "TransactionCategory 接口"
+              ],
+              "summary": "删除 TransactionCategory",
+              "operationId": "delete_3",
+              "parameters": [
+                  {
+                      "name": "id",
+                      "in": "path",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK"
+                  }
+              }
+          }
+      },
+      "/api/transactioncategory/tree": {
+          "get": {
+              "tags": [
+                  "TransactionCategory 接口"
+              ],
+              "summary": "以树形结构查询所有 TransactionCategory",
+              "operationId": "listTree",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "type": "array",
+                                  "items": {
+                                      "$ref": "#/components/schemas/TransactionCategoryDto"
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/transactioncategory/page": {
+          "get": {
+              "tags": [
+                  "TransactionCategory 接口"
+              ],
+              "summary": "分页查询 TransactionCategory",
+              "operationId": "page_5",
+              "parameters": [
+                  {
+                      "name": "page",
+                      "in": "query",
+                      "required": false,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32",
+                          "default": 0
+                      }
+                  },
+                  {
+                      "name": "size",
+                      "in": "query",
+                      "required": false,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32",
+                          "default": 10
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/PageResponseTransactionCategoryDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/test/user-id": {
+          "get": {
+              "tags": [
+                  "Test 接口"
+              ],
+              "summary": "测试直接获取userId",
+              "operationId": "getUserId",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "type": "string"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/test/user-id-header": {
+          "get": {
+              "tags": [
+                  "Test 接口"
+              ],
+              "summary": "测试直接获取userId（带请求头参数）",
+              "operationId": "getUserIdFromHeader",
+              "parameters": [
+                  {
+                      "name": "userId",
+                      "in": "header",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "type": "string"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/test/current-user": {
+          "get": {
+              "tags": [
+                  "Test 接口"
+              ],
+              "summary": "测试获取当前用户",
+              "operationId": "getCurrentUser",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "type": "string"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/test/current-user-id": {
+          "get": {
+              "tags": [
+                  "Test 接口"
+              ],
+              "summary": "测试UserUtil.getCurrentUserId方法",
+              "operationId": "getCurrentUserId",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "type": "string"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/statistics/yearly/{userId}": {
+          "get": {
+              "tags": [
+                  "Statistics 接口"
+              ],
+              "summary": "获取年度收支统计",
+              "operationId": "getYearlyStatistics",
+              "parameters": [
+                  {
+                      "name": "userId",
+                      "in": "path",
+                      "description": "用户ID",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "year",
+                      "in": "query",
+                      "description": "统计年份",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiResponseStatisticsDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/statistics/trend/{userId}": {
+          "get": {
+              "tags": [
+                  "Statistics 接口"
+              ],
+              "summary": "获取趋势统计",
+              "operationId": "getTrendStatistics",
+              "parameters": [
+                  {
+                      "name": "userId",
+                      "in": "path",
+                      "description": "用户ID",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "startDate",
+                      "in": "query",
+                      "description": "开始日期",
+                      "required": true,
+                      "schema": {
+                          "type": "string",
+                          "format": "date"
+                      }
+                  },
+                  {
+                      "name": "endDate",
+                      "in": "query",
+                      "description": "结束日期",
+                      "required": true,
+                      "schema": {
+                          "type": "string",
+                          "format": "date"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiResponseMapStringObject"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/statistics/total-assets/{userId}": {
+          "get": {
+              "tags": [
+                  "Statistics 接口"
+              ],
+              "summary": "获取用户总资产统计",
+              "operationId": "getTotalAssets",
+              "parameters": [
+                  {
+                      "name": "userId",
+                      "in": "path",
+                      "description": "用户ID",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiResponseStatisticsDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/statistics/monthly/{userId}": {
+          "get": {
+              "tags": [
+                  "Statistics 接口"
+              ],
+              "summary": "获取月度收支统计",
+              "operationId": "getMonthlyStatistics",
+              "parameters": [
+                  {
+                      "name": "userId",
+                      "in": "path",
+                      "description": "用户ID",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "month",
+                      "in": "query",
+                      "description": "统计月份",
+                      "required": true,
+                      "schema": {
+                          "type": "string",
+                          "format": "date"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiResponseStatisticsDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/statistics/investment/{userId}": {
+          "get": {
+              "tags": [
+                  "Statistics 接口"
+              ],
+              "summary": "获取投资资产统计",
+              "operationId": "getInvestmentStatistics",
+              "parameters": [
+                  {
+                      "name": "userId",
+                      "in": "path",
+                      "description": "用户ID",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiResponseListStatisticsDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/statistics/fixed-asset/{userId}": {
+          "get": {
+              "tags": [
+                  "Statistics 接口"
+              ],
+              "summary": "获取固定资产统计",
+              "operationId": "getFixedAssetStatistics",
+              "parameters": [
+                  {
+                      "name": "userId",
+                      "in": "path",
+                      "description": "用户ID",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiResponseListStatisticsDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/statistics/category/{userId}": {
+          "get": {
+              "tags": [
+                  "Statistics 接口"
+              ],
+              "summary": "获取分类统计",
+              "operationId": "getCategoryStatistics",
+              "parameters": [
+                  {
+                      "name": "userId",
+                      "in": "path",
+                      "description": "用户ID",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "startDate",
+                      "in": "query",
+                      "description": "开始日期",
+                      "required": true,
+                      "schema": {
+                          "type": "string",
+                          "format": "date"
+                      }
+                  },
+                  {
+                      "name": "endDate",
+                      "in": "query",
+                      "description": "结束日期",
+                      "required": true,
+                      "schema": {
+                          "type": "string",
+                          "format": "date"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiResponseListStatisticsDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/statistics/budget/{userId}": {
+          "get": {
+              "tags": [
+                  "Statistics 接口"
+              ],
+              "summary": "获取预算执行情况",
+              "operationId": "getBudgetExecution",
+              "parameters": [
+                  {
+                      "name": "userId",
+                      "in": "path",
+                      "description": "用户ID",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "month",
+                      "in": "query",
+                      "description": "统计月份",
+                      "required": true,
+                      "schema": {
+                          "type": "string",
+                          "format": "date"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiResponseStatisticsDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/statistics/account-balance/{userId}": {
+          "get": {
+              "tags": [
+                  "Statistics 接口"
+              ],
+              "summary": "获取账户余额统计",
+              "operationId": "getAccountBalanceStatistics",
+              "parameters": [
+                  {
+                      "name": "userId",
+                      "in": "path",
+                      "description": "用户ID",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiResponseListStatisticsDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/platformtransaction/{id}": {
+          "get": {
+              "tags": [
+                  "PlatformTransaction 接口"
+              ],
+              "summary": "根据 ID 查询 PlatformTransaction",
+              "operationId": "get_4",
+              "parameters": [
+                  {
+                      "name": "id",
+                      "in": "path",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/PlatformTransactionDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "delete": {
+              "tags": [
+                  "PlatformTransaction 接口"
+              ],
+              "summary": "删除 PlatformTransaction",
+              "operationId": "delete_4",
+              "parameters": [
+                  {
+                      "name": "id",
+                      "in": "path",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK"
+                  }
+              }
+          }
+      },
+      "/api/platformtransaction/page": {
+          "get": {
+              "tags": [
+                  "PlatformTransaction 接口"
+              ],
+              "summary": "分页查询 PlatformTransaction",
+              "operationId": "page_6",
+              "parameters": [
+                  {
+                      "name": "page",
+                      "in": "query",
+                      "required": false,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32",
+                          "default": 0
+                      }
+                  },
+                  {
+                      "name": "size",
+                      "in": "query",
+                      "required": false,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32",
+                          "default": 10
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/PageResponsePlatformTransactionDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/investmentasset/{id}": {
+          "get": {
+              "tags": [
+                  "InvestmentAsset 接口"
+              ],
+              "summary": "根据 ID 查询 InvestmentAsset",
+              "operationId": "get_5",
+              "parameters": [
+                  {
+                      "name": "id",
+                      "in": "path",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/InvestmentAssetDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "delete": {
+              "tags": [
+                  "InvestmentAsset 接口"
+              ],
+              "summary": "删除 InvestmentAsset",
+              "operationId": "delete_5",
+              "parameters": [
+                  {
+                      "name": "id",
+                      "in": "path",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK"
+                  }
+              }
+          }
+      },
+      "/api/investmentasset/page": {
+          "get": {
+              "tags": [
+                  "InvestmentAsset 接口"
+              ],
+              "summary": "分页查询 InvestmentAsset",
+              "operationId": "page_7",
+              "parameters": [
+                  {
+                      "name": "page",
+                      "in": "query",
+                      "required": false,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32",
+                          "default": 0
+                      }
+                  },
+                  {
+                      "name": "size",
+                      "in": "query",
+                      "required": false,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32",
+                          "default": 10
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/PageResponseInvestmentAssetDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/fixedasset/{id}": {
+          "get": {
+              "tags": [
+                  "FixedAsset 接口"
+              ],
+              "summary": "根据 ID 查询 FixedAsset",
+              "operationId": "get_6",
+              "parameters": [
+                  {
+                      "name": "id",
+                      "in": "path",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/FixedAssetDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "delete": {
+              "tags": [
+                  "FixedAsset 接口"
+              ],
+              "summary": "删除 FixedAsset",
+              "operationId": "delete_6",
+              "parameters": [
+                  {
+                      "name": "id",
+                      "in": "path",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK"
+                  }
+              }
+          }
+      },
+      "/api/fixedasset/page": {
+          "get": {
+              "tags": [
+                  "FixedAsset 接口"
+              ],
+              "summary": "分页查询 FixedAsset",
+              "operationId": "page_8",
+              "parameters": [
+                  {
+                      "name": "page",
+                      "in": "query",
+                      "required": false,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32",
+                          "default": 0
+                      }
+                  },
+                  {
+                      "name": "size",
+                      "in": "query",
+                      "required": false,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32",
+                          "default": 10
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/PageResponseFixedAssetDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/creditwalletstatement/{id}": {
+          "get": {
+              "tags": [
+                  "CreditWalletStatement 接口"
+              ],
+              "summary": "根据 ID 查询 CreditWalletStatement",
+              "operationId": "get_7",
+              "parameters": [
+                  {
+                      "name": "id",
+                      "in": "path",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/CreditWalletStatementDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "delete": {
+              "tags": [
+                  "CreditWalletStatement 接口"
+              ],
+              "summary": "删除 CreditWalletStatement",
+              "operationId": "delete_7",
+              "parameters": [
+                  {
+                      "name": "id",
+                      "in": "path",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK"
+                  }
+              }
+          }
+      },
+      "/api/creditwalletstatement/page": {
+          "get": {
+              "tags": [
+                  "CreditWalletStatement 接口"
+              ],
+              "summary": "分页查询 CreditWalletStatement",
+              "operationId": "page_9",
+              "parameters": [
+                  {
+                      "name": "page",
+                      "in": "query",
+                      "required": false,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32",
+                          "default": 0
+                      }
+                  },
+                  {
+                      "name": "size",
+                      "in": "query",
+                      "required": false,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32",
+                          "default": 10
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/PageResponseCreditWalletStatementDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/category-keywords/search": {
+          "get": {
+              "tags": [
+                  "category-keyword-mapping-controller"
+              ],
+              "operationId": "searchByKeyword",
+              "parameters": [
+                  {
+                      "name": "keyword",
+                      "in": "query",
+                      "required": true,
+                      "schema": {
+                          "type": "string"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiResponseFluxCategoryKeywordMapping"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/category-keywords/match": {
+          "get": {
+              "tags": [
+                  "category-keyword-mapping-controller"
+              ],
+              "operationId": "matchCategoryId",
+              "parameters": [
+                  {
+                      "name": "keyword",
+                      "in": "query",
+                      "required": true,
+                      "schema": {
+                          "type": "string"
+                      }
+                  },
+                  {
+                      "name": "userId",
+                      "in": "query",
+                      "required": false,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiResponseInteger"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/category-keywords/keywords": {
+          "get": {
+              "tags": [
+                  "category-keyword-mapping-controller"
+              ],
+              "operationId": "getAllKeywords",
+              "parameters": [
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiResponseFluxString"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/category-keywords/by-user-id": {
+          "get": {
+              "tags": [
+                  "category-keyword-mapping-controller"
+              ],
+              "operationId": "findByUserId",
+              "parameters": [
+                  {
+                      "name": "userId",
+                      "in": "query",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiResponseFluxCategoryKeywordMapping"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/category-keywords/by-category-id": {
+          "get": {
+              "tags": [
+                  "category-keyword-mapping-controller"
+              ],
+              "operationId": "findByCategoryId",
+              "parameters": [
+                  {
+                      "name": "categoryId",
+                      "in": "query",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiResponseFluxCategoryKeywordMapping"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/budget/{id}": {
+          "get": {
+              "tags": [
+                  "Budget 接口"
+              ],
+              "summary": "根据ID查询预算",
+              "operationId": "findById",
+              "parameters": [
+                  {
+                      "name": "id",
+                      "in": "path",
+                      "description": "预算ID",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiResponseBudgetDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "delete": {
+              "tags": [
+                  "Budget 接口"
+              ],
+              "summary": "删除预算",
+              "operationId": "deleteById",
+              "parameters": [
+                  {
+                      "name": "id",
+                      "in": "path",
+                      "description": "预算ID",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiResponseVoid"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/budget/user/{userId}": {
+          "get": {
+              "tags": [
+                  "Budget 接口"
+              ],
+              "summary": "查询用户所有预算",
+              "operationId": "findByUserId_1",
+              "parameters": [
+                  {
+                      "name": "userId",
+                      "in": "path",
+                      "description": "用户ID",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiResponseListBudgetDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/budget/user/{userId}/year": {
+          "get": {
+              "tags": [
+                  "Budget 接口"
+              ],
+              "summary": "查询用户指定年份的预算",
+              "operationId": "findByUserIdAndYear",
+              "parameters": [
+                  {
+                      "name": "userId",
+                      "in": "path",
+                      "description": "用户ID",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "year",
+                      "in": "query",
+                      "description": "统计年份",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiResponseListBudgetDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/budget/user/{userId}/page": {
+          "get": {
+              "tags": [
+                  "Budget 接口"
+              ],
+              "summary": "分页查询用户预算",
+              "operationId": "pageByUserId",
+              "parameters": [
+                  {
+                      "name": "userId",
+                      "in": "path",
+                      "description": "用户ID",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "page",
+                      "in": "query",
+                      "required": false,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32",
+                          "default": 0
+                      }
+                  },
+                  {
+                      "name": "size",
+                      "in": "query",
+                      "required": false,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32",
+                          "default": 10
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiResponsePageResponseBudgetDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/budget/user/{userId}/month": {
+          "get": {
+              "tags": [
+                  "Budget 接口"
+              ],
+              "summary": "查询用户指定月份的预算",
+              "operationId": "findByUserIdAndMonth",
+              "parameters": [
+                  {
+                      "name": "userId",
+                      "in": "path",
+                      "description": "用户ID",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "month",
+                      "in": "query",
+                      "description": "统计月份",
+                      "required": true,
+                      "schema": {
+                          "type": "string",
+                          "format": "date"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiResponseListBudgetDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/budget/user/{userId}/category/{categoryId}": {
+          "get": {
+              "tags": [
+                  "Budget 接口"
+              ],
+              "summary": "查询用户指定分类的预算",
+              "operationId": "findByUserIdAndCategory",
+              "parameters": [
+                  {
+                      "name": "userId",
+                      "in": "path",
+                      "description": "用户ID",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "categoryId",
+                      "in": "path",
+                      "description": "分类ID",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiResponseListBudgetDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/budget/user/{userId}/alerts": {
+          "get": {
+              "tags": [
+                  "Budget 接口"
+              ],
+              "summary": "获取预算提醒",
+              "operationId": "getBudgetAlerts",
+              "parameters": [
+                  {
+                      "name": "userId",
+                      "in": "path",
+                      "description": "用户ID",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiResponseListBudgetDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/assetaccount/{id}": {
+          "get": {
+              "tags": [
+                  "AssetAccount 接口"
+              ],
+              "summary": "根据 ID 查询 AssetAccount",
+              "operationId": "get_8",
+              "parameters": [
+                  {
+                      "name": "id",
+                      "in": "path",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/AssetAccountDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "delete": {
+              "tags": [
+                  "AssetAccount 接口"
+              ],
+              "summary": "删除 AssetAccount",
+              "operationId": "delete_8",
+              "parameters": [
+                  {
+                      "name": "id",
+                      "in": "path",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK"
+                  }
+              }
+          }
+      },
+      "/api/accounttransaction/{id}": {
+          "get": {
+              "tags": [
+                  "AccountTransaction 接口"
+              ],
+              "summary": "根据 ID 查询 AccountTransaction",
+              "operationId": "get_9",
+              "parameters": [
+                  {
+                      "name": "id",
+                      "in": "path",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK",
+                      "content": {
+                          "*/*": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/AccountTransactionDto"
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "delete": {
+              "tags": [
+                  "AccountTransaction 接口"
+              ],
+              "summary": "删除 AccountTransaction",
+              "operationId": "delete_9",
+              "parameters": [
+                  {
+                      "name": "id",
+                      "in": "path",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int32"
+                      }
+                  },
+                  {
+                      "name": "token",
+                      "in": "header",
+                      "description": "token",
+                      "required": false,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "OK"
+                  }
+              }
+          }
+      }
+  },
+  "components": {
+      "schemas": {
+          "UserDto": {
+              "type": "object",
+              "properties": {
+                  "id": {
+                      "type": "integer",
+                      "description": "用户ID",
+                      "format": "int32",
+                      "readOnly": true
+                  },
+                  "username": {
+                      "type": "string",
+                      "description": "用户名"
+                  },
+                  "email": {
+                      "type": "string",
+                      "description": "邮箱"
+                  },
+                  "phone": {
+                      "type": "string",
+                      "description": "手机号"
+                  },
+                  "password": {
+                      "type": "string",
+                      "description": "明文密码，仅创建或修改时传入",
+                      "writeOnly": true
+                  },
+                  "createdBy": {
+                      "type": "string",
+                      "description": "创建人",
+                      "readOnly": true
+                  },
+                  "createdAt": {
+                      "type": "string",
+                      "description": "创建时间",
+                      "format": "date-time",
+                      "readOnly": true
+                  },
+                  "updatedBy": {
+                      "type": "string",
+                      "description": "修改人",
+                      "readOnly": true
+                  },
+                  "updatedAt": {
+                      "type": "string",
+                      "description": "修改时间",
+                      "format": "date-time",
+                      "readOnly": true
+                  },
+                  "isDeleted": {
+                      "type": "integer",
+                      "description": "是否删除（0-否，1-是）",
+                      "format": "int32",
+                      "readOnly": true
+                  },
+                  "groupId": {
+                      "type": "integer",
+                      "description": "用户组Id",
+                      "format": "int32"
+                  },
+                  "role": {
+                      "type": "integer",
+                      "description": "用户组角色",
+                      "format": "int32"
+                  }
+              },
+              "description": "User 数据传输对象"
+          },
+          "UserGroupDto": {
+              "type": "object",
+              "properties": {
+                  "id": {
+                      "type": "integer",
+                      "description": "用户组ID",
+                      "format": "int32",
+                      "readOnly": true
+                  },
+                  "name": {
+                      "type": "string",
+                      "description": "组名称（如 家庭、公司账本）"
+                  },
+                  "description": {
+                      "type": "string",
+                      "description": "组描述"
+                  },
+                  "createdBy": {
+                      "type": "string",
+                      "description": "创建人",
+                      "readOnly": true
+                  },
+                  "createdAt": {
+                      "type": "string",
+                      "description": "创建时间",
+                      "format": "date-time",
+                      "readOnly": true
+                  },
+                  "updatedBy": {
+                      "type": "string",
+                      "description": "修改人",
+                      "readOnly": true
+                  },
+                  "updatedAt": {
+                      "type": "string",
+                      "description": "修改时间",
+                      "format": "date-time",
+                      "readOnly": true
+                  },
+                  "isDeleted": {
+                      "type": "integer",
+                      "description": "是否删除（0-否，1-是）",
+                      "format": "int32",
+                      "readOnly": true
+                  }
+              },
+              "description": "UserGroup 数据传输对象"
+          },
+          "UserGroupMemberDto": {
+              "type": "object",
+              "properties": {
+                  "id": {
+                      "type": "integer",
+                      "description": "关系ID",
+                      "format": "int32",
+                      "readOnly": true
+                  },
+                  "groupId": {
+                      "type": "integer",
+                      "description": "所属用户组ID",
+                      "format": "int32"
+                  },
+                  "userId": {
+                      "type": "integer",
+                      "description": "用户ID",
+                      "format": "int32"
+                  },
+                  "role": {
+                      "type": "integer",
+                      "description": "角色权限：1-组长(owner)，2-成员(member)",
+                      "format": "int32"
+                  },
+                  "joinedAt": {
+                      "type": "string",
+                      "description": "加入时间",
+                      "format": "date-time"
+                  },
+                  "createdBy": {
+                      "type": "string",
+                      "description": "创建人",
+                      "readOnly": true
+                  },
+                  "createdAt": {
+                      "type": "string",
+                      "description": "创建时间",
+                      "format": "date-time",
+                      "readOnly": true
+                  },
+                  "updatedBy": {
+                      "type": "string",
+                      "description": "修改人",
+                      "readOnly": true
+                  },
+                  "updatedAt": {
+                      "type": "string",
+                      "description": "修改时间",
+                      "format": "date-time",
+                      "readOnly": true
+                  },
+                  "isDeleted": {
+                      "type": "integer",
+                      "description": "是否删除（0-否，1-是）",
+                      "format": "int32",
+                      "readOnly": true
+                  }
+              },
+              "description": "UserGroupMember 数据传输对象"
+          },
+          "TransactionCategoryDto": {
+              "type": "object",
+              "properties": {
+                  "id": {
+                      "type": "integer",
+                      "description": "分类ID",
+                      "format": "int32",
+                      "readOnly": true
+                  },
+                  "name": {
+                      "type": "string",
+                      "description": "分类名称（如 餐饮）"
+                  },
+                  "type": {
+                      "type": "integer",
+                      "description": "分类类型：1-income，2-expense",
+                      "format": "int32"
+                  },
+                  "parentId": {
+                      "type": "integer",
+                      "description": "父分类ID",
+                      "format": "int32"
+                  },
+                  "icon": {
+                      "type": "string",
+                      "description": "图标"
+                  },
+                  "userId": {
+                      "type": "integer",
+                      "description": "所属用户，null 表示系统分类",
+                      "format": "int32",
+                      "readOnly": true
+                  },
+                  "sortOrder": {
+                      "type": "integer",
+                      "description": "排序值",
+                      "format": "int32"
+                  },
+                  "createdBy": {
+                      "type": "string",
+                      "description": "创建人",
+                      "readOnly": true
+                  },
+                  "createdAt": {
+                      "type": "string",
+                      "description": "创建时间",
+                      "format": "date-time",
+                      "readOnly": true
+                  },
+                  "updatedBy": {
+                      "type": "string",
+                      "description": "修改人",
+                      "readOnly": true
+                  },
+                  "updatedAt": {
+                      "type": "string",
+                      "description": "修改时间",
+                      "format": "date-time",
+                      "readOnly": true
+                  },
+                  "isDeleted": {
+                      "type": "integer",
+                      "description": "是否删除（0-否，1-是）",
+                      "format": "int32",
+                      "readOnly": true
+                  },
+                  "children": {
+                      "type": "array",
+                      "description": "子分类列表，仅树形查询返回时填充",
+                      "readOnly": true,
+                      "items": {
+                          "$ref": "#/components/schemas/TransactionCategoryDto"
+                      }
+                  }
+              },
+              "description": "TransactionCategory 数据传输对象"
+          },
+          "PlatformTransactionDto": {
+              "type": "object",
+              "properties": {
+                  "id": {
+                      "type": "integer",
+                      "description": "平台账单ID",
+                      "format": "int32",
+                      "readOnly": true
+                  },
+                  "userId": {
+                      "type": "integer",
+                      "description": "所属用户",
+                      "format": "int32",
+                      "readOnly": true
+                  },
+                  "platformCode": {
+                      "type": "string",
+                      "description": "平台编码"
+                  },
+                  "rawJson": {
+                      "type": "string",
+                      "description": "原始账单JSON数据"
+                  },
+                  "mappedTransactionId": {
+                      "type": "integer",
+                      "description": "映射到业务交易ID",
+                      "format": "int32"
+                  },
+                  "remark": {
+                      "type": "string",
+                      "description": "备注"
+                  },
+                  "createdBy": {
+                      "type": "string",
+                      "description": "创建人",
+                      "readOnly": true
+                  },
+                  "createdAt": {
+                      "type": "string",
+                      "description": "导入时间",
+                      "format": "date-time",
+                      "readOnly": true
+                  },
+                  "updatedBy": {
+                      "type": "string",
+                      "description": "修改人",
+                      "readOnly": true
+                  },
+                  "updatedAt": {
+                      "type": "string",
+                      "description": "修改时间",
+                      "format": "date-time",
+                      "readOnly": true
+                  },
+                  "isDeleted": {
+                      "type": "integer",
+                      "description": "是否删除（0-否，1-是）",
+                      "format": "int32",
+                      "readOnly": true
+                  }
+              },
+              "description": "PlatformTransaction 数据传输对象"
+          },
+          "InvestmentAssetDto": {
+              "type": "object",
+              "properties": {
+                  "id": {
+                      "type": "integer",
+                      "description": "投资资产ID",
+                      "format": "int32",
+                      "readOnly": true
+                  },
+                  "userId": {
+                      "type": "integer",
+                      "description": "所属用户",
+                      "format": "int32",
+                      "readOnly": true
+                  },
+                  "accountId": {
+                      "type": "integer",
+                      "description": "关联账户",
+                      "format": "int32"
+                  },
+                  "code": {
+                      "type": "string",
+                      "description": "股票/基金代码"
+                  },
+                  "name": {
+                      "type": "string",
+                      "description": "名称"
+                  },
+                  "type": {
+                      "type": "integer",
+                      "description": "类型：1-stock，2-fund，3-bond",
+                      "format": "int32"
+                  },
+                  "quantity": {
+                      "type": "number",
+                      "description": "持仓数量"
+                  },
+                  "costPrice": {
+                      "type": "number",
+                      "description": "成本价"
+                  },
+                  "marketPrice": {
+                      "type": "number",
+                      "description": "市价"
+                  },
+                  "currency": {
+                      "type": "string",
+                      "description": "币种"
+                  },
+                  "lastUpdated": {
+                      "type": "string",
+                      "description": "更新时间",
+                      "format": "date-time"
+                  },
+                  "createdBy": {
+                      "type": "string",
+                      "description": "创建人",
+                      "readOnly": true
+                  },
+                  "createdAt": {
+                      "type": "string",
+                      "description": "创建时间",
+                      "format": "date-time",
+                      "readOnly": true
+                  },
+                  "updatedBy": {
+                      "type": "string",
+                      "description": "修改人",
+                      "readOnly": true
+                  },
+                  "updatedAt": {
+                      "type": "string",
+                      "description": "修改时间",
+                      "format": "date-time",
+                      "readOnly": true
+                  },
+                  "isDeleted": {
+                      "type": "integer",
+                      "description": "是否删除（0-否，1-是）",
+                      "format": "int32",
+                      "readOnly": true
+                  }
+              },
+              "description": "InvestmentAsset 数据传输对象"
+          },
+          "FixedAssetDto": {
+              "type": "object",
+              "properties": {
+                  "id": {
+                      "type": "integer",
+                      "description": "固定资产ID",
+                      "format": "int32",
+                      "readOnly": true
+                  },
+                  "userId": {
+                      "type": "integer",
+                      "description": "所属用户",
+                      "format": "int32",
+                      "readOnly": true
+                  },
+                  "name": {
+                      "type": "string",
+                      "description": "资产名称"
+                  },
+                  "type": {
+                      "type": "integer",
+                      "description": "资产类型：1-property，2-vehicle，3-equipment，4-other",
+                      "format": "int32"
+                  },
+                  "value": {
+                      "type": "number",
+                      "description": "评估/购入金额"
+                  },
+                  "purchaseDate": {
+                      "type": "string",
+                      "description": "购买日期",
+                      "format": "date-time"
+                  },
+                  "location": {
+                      "type": "string",
+                      "description": "地址或位置"
+                  },
+                  "note": {
+                      "type": "string",
+                      "description": "备注"
+                  },
+                  "createdBy": {
+                      "type": "string",
+                      "description": "创建人",
+                      "readOnly": true
+                  },
+                  "createdAt": {
+                      "type": "string",
+                      "description": "创建时间",
+                      "format": "date-time",
+                      "readOnly": true
+                  },
+                  "updatedBy": {
+                      "type": "string",
+                      "description": "修改人",
+                      "readOnly": true
+                  },
+                  "updatedAt": {
+                      "type": "string",
+                      "description": "修改时间",
+                      "format": "date-time",
+                      "readOnly": true
+                  },
+                  "isDeleted": {
+                      "type": "integer",
+                      "description": "是否删除（0-否，1-是）",
+                      "format": "int32",
+                      "readOnly": true
+                  }
+              },
+              "description": "FixedAsset 数据传输对象"
+          },
+          "CreditWalletStatementDto": {
+              "type": "object",
+              "properties": {
+                  "id": {
+                      "type": "integer",
+                      "description": "账单ID",
+                      "format": "int32",
+                      "readOnly": true
+                  },
+                  "accountId": {
+                      "type": "integer",
+                      "description": "信用钱包账户ID",
+                      "format": "int32"
+                  },
+                  "userId": {
+                      "type": "integer",
+                      "description": "所属用户",
+                      "format": "int32",
+                      "readOnly": true
+                  },
+                  "billingPeriodStart": {
+                      "type": "string",
+                      "description": "账单期开始日期",
+                      "format": "date-time"
+                  },
+                  "billingPeriodEnd": {
+                      "type": "string",
+                      "description": "账单期结束日期",
+                      "format": "date-time"
+                  },
+                  "totalAmount": {
+                      "type": "number",
+                      "description": "应还金额"
+                  },
+                  "repayDueDate": {
+                      "type": "string",
+                      "description": "还款到期日",
+                      "format": "date-time"
+                  },
+                  "repayDate": {
+                      "type": "string",
+                      "description": "实际还款日",
+                      "format": "date-time"
+                  },
+                  "status": {
+                      "type": "integer",
+                      "description": "账单状态：1-open，2-paid，3-overdue",
+                      "format": "int32"
+                  },
+                  "createdBy": {
+                      "type": "string",
+                      "description": "创建人",
+                      "readOnly": true
+                  },
+                  "createdAt": {
+                      "type": "string",
+                      "description": "生成时间",
+                      "format": "date-time",
+                      "readOnly": true
+                  },
+                  "updatedBy": {
+                      "type": "string",
+                      "description": "修改人",
+                      "readOnly": true
+                  },
+                  "updatedAt": {
+                      "type": "string",
+                      "description": "修改时间",
+                      "format": "date-time",
+                      "readOnly": true
+                  },
+                  "isDeleted": {
+                      "type": "integer",
+                      "description": "是否删除（0-否，1-是）",
+                      "format": "int32",
+                      "readOnly": true
+                  }
+              },
+              "description": "CreditWalletStatement 数据传输对象"
+          },
+          "CategoryKeywordMapping": {
+              "type": "object",
+              "properties": {
+                  "id": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "categoryId": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "keyword": {
+                      "type": "string"
+                  },
+                  "weight": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "userId": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "isActive": {
+                      "type": "boolean"
+                  },
+                  "createdTime": {
+                      "type": "string",
+                      "format": "date-time"
+                  },
+                  "updatedTime": {
+                      "type": "string",
+                      "format": "date-time"
+                  }
+              }
+          },
+          "ApiResponseCategoryKeywordMapping": {
+              "type": "object",
+              "properties": {
+                  "code": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "message": {
+                      "type": "string"
+                  },
+                  "data": {
+                      "$ref": "#/components/schemas/CategoryKeywordMapping"
+                  },
+                  "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                  }
+              }
+          },
+          "BudgetDto": {
+              "type": "object",
+              "properties": {
+                  "id": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "userId": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "name": {
+                      "type": "string"
+                  },
+                  "type": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "categoryId": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "categoryName": {
+                      "type": "string"
+                  },
+                  "amount": {
+                      "type": "number"
+                  },
+                  "usedAmount": {
+                      "type": "number"
+                  },
+                  "remainingAmount": {
+                      "type": "number"
+                  },
+                  "usageRate": {
+                      "type": "number"
+                  },
+                  "startDate": {
+                      "type": "string",
+                      "format": "date"
+                  },
+                  "endDate": {
+                      "type": "string",
+                      "format": "date"
+                  },
+                  "status": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "statusName": {
+                      "type": "string"
+                  },
+                  "alertThreshold": {
+                      "type": "number"
+                  },
+                  "remark": {
+                      "type": "string"
+                  },
+                  "createdBy": {
+                      "type": "string"
+                  },
+                  "createdAt": {
+                      "type": "string",
+                      "format": "date-time"
+                  },
+                  "updatedBy": {
+                      "type": "string"
+                  },
+                  "updatedAt": {
+                      "type": "string",
+                      "format": "date-time"
+                  }
+              }
+          },
+          "ApiResponseBudgetDto": {
+              "type": "object",
+              "properties": {
+                  "code": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "message": {
+                      "type": "string"
+                  },
+                  "data": {
+                      "$ref": "#/components/schemas/BudgetDto"
+                  },
+                  "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                  }
+              }
+          },
+          "AssetAccountDto": {
+              "type": "object",
+              "properties": {
+                  "id": {
+                      "type": "integer",
+                      "description": "账户ID",
+                      "format": "int32",
+                      "readOnly": true
+                  },
+                  "userId": {
+                      "type": "integer",
+                      "description": "所属用户",
+                      "format": "int32",
+                      "readOnly": true
+                  },
+                  "name": {
+                      "type": "string",
+                      "description": "账户名称（如 招商银行、花呗）"
+                  },
+                  "type": {
+                      "type": "integer",
+                      "description": "账户类型：1-bank，2-platform，3-credit_wallet，4-wallet",
+                      "format": "int32"
+                  },
+                  "platformCode": {
+                      "type": "string",
+                      "description": "平台标识（如 ALIPAY、MEITUAN）"
+                  },
+                  "accountNumber": {
+                      "type": "string",
+                      "description": "银行卡号/平台账号"
+                  },
+                  "isVirtual": {
+                      "type": "boolean",
+                      "description": "是否为虚拟账户"
+                  },
+                  "creditLimit": {
+                      "type": "number",
+                      "description": "信用额度，仅信用钱包用"
+                  },
+                  "currency": {
+                      "type": "string",
+                      "description": "币种"
+                  },
+                  "createdBy": {
+                      "type": "string",
+                      "description": "创建人",
+                      "readOnly": true
+                  },
+                  "createdAt": {
+                      "type": "string",
+                      "description": "创建时间",
+                      "format": "date-time",
+                      "readOnly": true
+                  },
+                  "updatedBy": {
+                      "type": "string",
+                      "description": "修改人",
+                      "readOnly": true
+                  },
+                  "updatedAt": {
+                      "type": "string",
+                      "description": "修改时间",
+                      "format": "date-time",
+                      "readOnly": true
+                  },
+                  "isDeleted": {
+                      "type": "integer",
+                      "description": "是否删除（0-否，1-是）",
+                      "format": "int32",
+                      "readOnly": true
+                  }
+              },
+              "description": "AssetAccount 数据传输对象"
+          },
+          "AccountTransactionDto": {
+              "type": "object",
+              "properties": {
+                  "id": {
+                      "type": "integer",
+                      "description": "交易ID",
+                      "format": "int32",
+                      "readOnly": true
+                  },
+                  "userId": {
+                      "type": "integer",
+                      "description": "所属用户",
+                      "format": "int32",
+                      "readOnly": true
+                  },
+                  "accountId": {
+                      "type": "integer",
+                      "description": "发生账户",
+                      "format": "int32"
+                  },
+                  "type": {
+                      "type": "integer",
+                      "description": "交易类型：1-income，2-expense，3-transfer_out，4-transfer_in",
+                      "format": "int32"
+                  },
+                  "amount": {
+                      "type": "number",
+                      "description": "交易金额"
+                  },
+                  "categoryId": {
+                      "type": "integer",
+                      "description": "分类ID",
+                      "format": "int32"
+                  },
+                  "relatedTransactionId": {
+                      "type": "integer",
+                      "description": "关联交易ID",
+                      "format": "int32"
+                  },
+                  "description": {
+                      "type": "string",
+                      "description": "摘要说明"
+                  },
+                  "transactionTime": {
+                      "type": "string",
+                      "description": "实际发生时间",
+                      "format": "date-time"
+                  },
+                  "sourceType": {
+                      "type": "integer",
+                      "description": "来源类型：1-bank，2-platform，3-credit_wallet",
+                      "format": "int32"
+                  },
+                  "sourceRef": {
+                      "type": "string",
+                      "description": "原始账单唯一标识"
+                  },
+                  "statementId": {
+                      "type": "integer",
+                      "description": "账单归属ID",
+                      "format": "int32"
+                  },
+                  "createdBy": {
+                      "type": "string",
+                      "description": "创建人",
+                      "readOnly": true
+                  },
+                  "createdAt": {
+                      "type": "string",
+                      "description": "创建时间",
+                      "format": "date-time",
+                      "readOnly": true
+                  },
+                  "updatedBy": {
+                      "type": "string",
+                      "description": "修改人",
+                      "readOnly": true
+                  },
+                  "updatedAt": {
+                      "type": "string",
+                      "description": "修改时间",
+                      "format": "date-time",
+                      "readOnly": true
+                  },
+                  "isDeleted": {
+                      "type": "integer",
+                      "description": "是否删除（0-否，1-是）",
+                      "format": "int32",
+                      "readOnly": true
+                  }
+              },
+              "description": "AccountTransaction 数据传输对象"
+          },
+          "LoginReq": {
+              "type": "object",
+              "properties": {
+                  "username": {
+                      "type": "string"
+                  },
+                  "password": {
+                      "type": "string"
+                  }
+              }
+          },
+          "TokenResp": {
+              "type": "object",
+              "properties": {
+                  "token": {
+                      "type": "string"
+                  }
+              }
+          },
+          "PageResponseAssetAccountDto": {
+              "type": "object",
+              "properties": {
+                  "content": {
+                      "type": "array",
+                      "items": {
+                          "$ref": "#/components/schemas/AssetAccountDto"
+                      }
+                  },
+                  "pageNumber": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "pageSize": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "totalElements": {
+                      "type": "integer",
+                      "format": "int64"
+                  },
+                  "totalPages": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "hasNext": {
+                      "type": "boolean"
+                  },
+                  "hasPrevious": {
+                      "type": "boolean"
+                  },
+                  "first": {
+                      "type": "boolean"
+                  },
+                  "last": {
+                      "type": "boolean"
+                  }
+              }
+          },
+          "PageResponseAccountTransactionDto": {
+              "type": "object",
+              "properties": {
+                  "content": {
+                      "type": "array",
+                      "items": {
+                          "$ref": "#/components/schemas/AccountTransactionDto"
+                      }
+                  },
+                  "pageNumber": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "pageSize": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "totalElements": {
+                      "type": "integer",
+                      "format": "int64"
+                  },
+                  "totalPages": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "hasNext": {
+                      "type": "boolean"
+                  },
+                  "hasPrevious": {
+                      "type": "boolean"
+                  },
+                  "first": {
+                      "type": "boolean"
+                  },
+                  "last": {
+                      "type": "boolean"
+                  }
+              }
+          },
+          "PageResponseUserGroupMemberDto": {
+              "type": "object",
+              "properties": {
+                  "content": {
+                      "type": "array",
+                      "items": {
+                          "$ref": "#/components/schemas/UserGroupMemberDto"
+                      }
+                  },
+                  "pageNumber": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "pageSize": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "totalElements": {
+                      "type": "integer",
+                      "format": "int64"
+                  },
+                  "totalPages": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "hasNext": {
+                      "type": "boolean"
+                  },
+                  "hasPrevious": {
+                      "type": "boolean"
+                  },
+                  "first": {
+                      "type": "boolean"
+                  },
+                  "last": {
+                      "type": "boolean"
+                  }
+              }
+          },
+          "PageResponseUserGroupDto": {
+              "type": "object",
+              "properties": {
+                  "content": {
+                      "type": "array",
+                      "items": {
+                          "$ref": "#/components/schemas/UserGroupDto"
+                      }
+                  },
+                  "pageNumber": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "pageSize": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "totalElements": {
+                      "type": "integer",
+                      "format": "int64"
+                  },
+                  "totalPages": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "hasNext": {
+                      "type": "boolean"
+                  },
+                  "hasPrevious": {
+                      "type": "boolean"
+                  },
+                  "first": {
+                      "type": "boolean"
+                  },
+                  "last": {
+                      "type": "boolean"
+                  }
+              }
+          },
+          "PageResponseUserDto": {
+              "type": "object",
+              "properties": {
+                  "content": {
+                      "type": "array",
+                      "items": {
+                          "$ref": "#/components/schemas/UserDto"
+                      }
+                  },
+                  "pageNumber": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "pageSize": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "totalElements": {
+                      "type": "integer",
+                      "format": "int64"
+                  },
+                  "totalPages": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "hasNext": {
+                      "type": "boolean"
+                  },
+                  "hasPrevious": {
+                      "type": "boolean"
+                  },
+                  "first": {
+                      "type": "boolean"
+                  },
+                  "last": {
+                      "type": "boolean"
+                  }
+              }
+          },
+          "PageResponseTransactionCategoryDto": {
+              "type": "object",
+              "properties": {
+                  "content": {
+                      "type": "array",
+                      "items": {
+                          "$ref": "#/components/schemas/TransactionCategoryDto"
+                      }
+                  },
+                  "pageNumber": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "pageSize": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "totalElements": {
+                      "type": "integer",
+                      "format": "int64"
+                  },
+                  "totalPages": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "hasNext": {
+                      "type": "boolean"
+                  },
+                  "hasPrevious": {
+                      "type": "boolean"
+                  },
+                  "first": {
+                      "type": "boolean"
+                  },
+                  "last": {
+                      "type": "boolean"
+                  }
+              }
+          },
+          "ApiResponseStatisticsDto": {
+              "type": "object",
+              "properties": {
+                  "code": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "message": {
+                      "type": "string"
+                  },
+                  "data": {
+                      "$ref": "#/components/schemas/StatisticsDto"
+                  },
+                  "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                  }
+              }
+          },
+          "StatisticsDto": {
+              "type": "object",
+              "properties": {
+                  "id": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "userId": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "type": {
+                      "type": "string"
+                  },
+                  "name": {
+                      "type": "string"
+                  },
+                  "value": {
+                      "type": "number"
+                  },
+                  "unit": {
+                      "type": "string"
+                  },
+                  "date": {
+                      "type": "string",
+                      "format": "date"
+                  },
+                  "period": {
+                      "type": "string"
+                  },
+                  "categoryId": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "categoryName": {
+                      "type": "string"
+                  },
+                  "accountId": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "accountName": {
+                      "type": "string"
+                  },
+                  "income": {
+                      "type": "number"
+                  },
+                  "expense": {
+                      "type": "number"
+                  },
+                  "balance": {
+                      "type": "number"
+                  },
+                  "percentage": {
+                      "type": "number"
+                  },
+                  "target": {
+                      "type": "number"
+                  },
+                  "completionRate": {
+                      "type": "number"
+                  },
+                  "createdAt": {
+                      "type": "string",
+                      "format": "date-time"
+                  },
+                  "updatedAt": {
+                      "type": "string",
+                      "format": "date-time"
+                  }
+              }
+          },
+          "ApiResponseMapStringObject": {
+              "type": "object",
+              "properties": {
+                  "code": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "message": {
+                      "type": "string"
+                  },
+                  "data": {
+                      "type": "object",
+                      "additionalProperties": {
+                          "type": "object"
+                      }
+                  },
+                  "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                  }
+              }
+          },
+          "ApiResponseListStatisticsDto": {
+              "type": "object",
+              "properties": {
+                  "code": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "message": {
+                      "type": "string"
+                  },
+                  "data": {
+                      "type": "array",
+                      "items": {
+                          "$ref": "#/components/schemas/StatisticsDto"
+                      }
+                  },
+                  "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                  }
+              }
+          },
+          "PageResponsePlatformTransactionDto": {
+              "type": "object",
+              "properties": {
+                  "content": {
+                      "type": "array",
+                      "items": {
+                          "$ref": "#/components/schemas/PlatformTransactionDto"
+                      }
+                  },
+                  "pageNumber": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "pageSize": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "totalElements": {
+                      "type": "integer",
+                      "format": "int64"
+                  },
+                  "totalPages": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "hasNext": {
+                      "type": "boolean"
+                  },
+                  "hasPrevious": {
+                      "type": "boolean"
+                  },
+                  "first": {
+                      "type": "boolean"
+                  },
+                  "last": {
+                      "type": "boolean"
+                  }
+              }
+          },
+          "PageResponseInvestmentAssetDto": {
+              "type": "object",
+              "properties": {
+                  "content": {
+                      "type": "array",
+                      "items": {
+                          "$ref": "#/components/schemas/InvestmentAssetDto"
+                      }
+                  },
+                  "pageNumber": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "pageSize": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "totalElements": {
+                      "type": "integer",
+                      "format": "int64"
+                  },
+                  "totalPages": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "hasNext": {
+                      "type": "boolean"
+                  },
+                  "hasPrevious": {
+                      "type": "boolean"
+                  },
+                  "first": {
+                      "type": "boolean"
+                  },
+                  "last": {
+                      "type": "boolean"
+                  }
+              }
+          },
+          "PageResponseFixedAssetDto": {
+              "type": "object",
+              "properties": {
+                  "content": {
+                      "type": "array",
+                      "items": {
+                          "$ref": "#/components/schemas/FixedAssetDto"
+                      }
+                  },
+                  "pageNumber": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "pageSize": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "totalElements": {
+                      "type": "integer",
+                      "format": "int64"
+                  },
+                  "totalPages": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "hasNext": {
+                      "type": "boolean"
+                  },
+                  "hasPrevious": {
+                      "type": "boolean"
+                  },
+                  "first": {
+                      "type": "boolean"
+                  },
+                  "last": {
+                      "type": "boolean"
+                  }
+              }
+          },
+          "PageResponseCreditWalletStatementDto": {
+              "type": "object",
+              "properties": {
+                  "content": {
+                      "type": "array",
+                      "items": {
+                          "$ref": "#/components/schemas/CreditWalletStatementDto"
+                      }
+                  },
+                  "pageNumber": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "pageSize": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "totalElements": {
+                      "type": "integer",
+                      "format": "int64"
+                  },
+                  "totalPages": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "hasNext": {
+                      "type": "boolean"
+                  },
+                  "hasPrevious": {
+                      "type": "boolean"
+                  },
+                  "first": {
+                      "type": "boolean"
+                  },
+                  "last": {
+                      "type": "boolean"
+                  }
+              }
+          },
+          "ApiResponseFluxCategoryKeywordMapping": {
+              "type": "object",
+              "properties": {
+                  "code": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "message": {
+                      "type": "string"
+                  },
+                  "data": {
+                      "type": "array",
+                      "items": {
+                          "$ref": "#/components/schemas/CategoryKeywordMapping"
+                      }
+                  },
+                  "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                  }
+              }
+          },
+          "ApiResponseInteger": {
+              "type": "object",
+              "properties": {
+                  "code": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "message": {
+                      "type": "string"
+                  },
+                  "data": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                  }
+              }
+          },
+          "ApiResponseFluxString": {
+              "type": "object",
+              "properties": {
+                  "code": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "message": {
+                      "type": "string"
+                  },
+                  "data": {
+                      "type": "array",
+                      "items": {
+                          "type": "string"
+                      }
+                  },
+                  "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                  }
+              }
+          },
+          "ApiResponseListBudgetDto": {
+              "type": "object",
+              "properties": {
+                  "code": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "message": {
+                      "type": "string"
+                  },
+                  "data": {
+                      "type": "array",
+                      "items": {
+                          "$ref": "#/components/schemas/BudgetDto"
+                      }
+                  },
+                  "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                  }
+              }
+          },
+          "ApiResponsePageResponseBudgetDto": {
+              "type": "object",
+              "properties": {
+                  "code": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "message": {
+                      "type": "string"
+                  },
+                  "data": {
+                      "$ref": "#/components/schemas/PageResponseBudgetDto"
+                  },
+                  "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                  }
+              }
+          },
+          "PageResponseBudgetDto": {
+              "type": "object",
+              "properties": {
+                  "content": {
+                      "type": "array",
+                      "items": {
+                          "$ref": "#/components/schemas/BudgetDto"
+                      }
+                  },
+                  "pageNumber": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "pageSize": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "totalElements": {
+                      "type": "integer",
+                      "format": "int64"
+                  },
+                  "totalPages": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "hasNext": {
+                      "type": "boolean"
+                  },
+                  "hasPrevious": {
+                      "type": "boolean"
+                  },
+                  "first": {
+                      "type": "boolean"
+                  },
+                  "last": {
+                      "type": "boolean"
+                  }
+              }
+          },
+          "ApiResponseVoid": {
+              "type": "object",
+              "properties": {
+                  "code": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "message": {
+                      "type": "string"
+                  },
+                  "data": {
+                      "type": "object"
+                  },
+                  "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                  }
+              }
+          }
+      }
+  }
+}
