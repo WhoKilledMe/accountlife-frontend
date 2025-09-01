@@ -84,9 +84,8 @@ export default function Layout() {
         label: "用户管理",
         icon: <TeamOutlined />,
         children: [
-          { key: "users-simple", label: <NavLink to="/users">用户列表</NavLink>, icon: <UserOutlined /> },
           { key: "users-admin", label: <NavLink to="/users/admin">用户管理</NavLink>, icon: <SettingOutlined /> },
-          { key: "admin-users", label: <NavLink to="/admin/users">后台管理</NavLink>, icon: <TeamOutlined /> },
+          { key: "usergroups", label: <NavLink to="/usergroups">用户组管理</NavLink>, icon: <UserOutlined /> },
         ],
       },
       {
@@ -117,9 +116,8 @@ export default function Layout() {
   const selectedKey = useMemo(() => {
     const p = location.pathname;
     if (p === "/") return "home";
-    if (p.startsWith("/admin/users")) return "admin-users";
     if (p.startsWith("/users/admin")) return "users-admin";
-    if (p.startsWith("/users")) return "users-simple";
+    if (p.startsWith("/usergroups")) return "usergroups";
     if (p.startsWith("/categories")) return "categories";
     if (p.startsWith("/accounts")) return "accounts";
     if (p.startsWith("/transactions")) return "transactions";
@@ -133,7 +131,7 @@ export default function Layout() {
   const openKeys = useMemo(() => {
     const p = location.pathname;
     if (p === "/") return ["dashboard"];
-    if (p.startsWith("/users") || p.startsWith("/admin/users")) return ["user-management"];
+    if (p.startsWith("/users") || p.startsWith("/usergroups")) return ["user-management"];
     if (p.startsWith("/accounts") || p.startsWith("/transactions") || p.startsWith("/budgets")) return ["financial"];
     if (p.startsWith("/categories") || p.startsWith("/keywords") || p.startsWith("/upload")) return ["system"];
     return ["dashboard"];
@@ -185,8 +183,8 @@ export default function Layout() {
   const getPageTitle = () => {
     const p = location.pathname;
     if (p === "/") return "首页概览";
-    if (p.startsWith("/users")) return "用户管理";
-    if (p.startsWith("/admin/users")) return "后台用户管理";
+    if (p.startsWith("/users/admin")) return "用户管理";
+    if (p.startsWith("/usergroups")) return "用户组管理";
     if (p.startsWith("/categories")) return "分类管理";
     if (p.startsWith("/accounts")) return "账户管理";
     if (p.startsWith("/transactions")) return "交易记录";

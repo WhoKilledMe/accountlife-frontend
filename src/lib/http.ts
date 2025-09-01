@@ -17,7 +17,8 @@ http.interceptors.request.use((config) => {
     const token = localStorage.getItem("token");
     if (token) {
       (config.headers as any)["token"] = `${token}`;
-      //(config.headers as any)["Authorization"] = `Bearer ${token}`;
+      // Also attach standard Authorization header for backends expecting it
+      (config.headers as any)["Authorization"] = `Bearer ${token}`;
     }
   } catch (_) {
     // SSR or storage not available

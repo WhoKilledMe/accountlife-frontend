@@ -54,6 +54,7 @@ const mockTransactions: AccountTransactionDto[] = [
 
 export default function Transactions() {
   const qc = useQueryClient();
+  const currencyFormat = new Intl.NumberFormat("zh-CN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   const [form] = Form.useForm();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState<AccountTransactionDto | null>(null);
@@ -165,7 +166,7 @@ export default function Transactions() {
         const isIncome = record.type === 1;
         return (
           <span style={{ color: isIncome ? "#34C759" : "#FF3B30", fontWeight: 500 }}>
-            {isIncome ? "+" : "-"}¥{amount.toLocaleString()}
+            ¥{currencyFormat.format(amount || 0)}
           </span>
         );
       },
@@ -241,7 +242,8 @@ export default function Transactions() {
           <Card>
             <Statistic
               title="总收入"
-              value={totalIncome}
+              value={Number(totalIncome.toFixed(2))}
+              precision={2}
               prefix="¥"
               valueStyle={{ color: "#34C759" }}
             />
@@ -251,7 +253,8 @@ export default function Transactions() {
           <Card>
             <Statistic
               title="总支出"
-              value={totalExpense}
+              value={Number(totalExpense.toFixed(2))}
+              precision={2}
               prefix="¥"
               valueStyle={{ color: "#FF3B30" }}
             />
@@ -261,7 +264,8 @@ export default function Transactions() {
           <Card>
             <Statistic
               title="净收入"
-              value={netAmount}
+              value={Number(netAmount.toFixed(2))}
+              precision={2}
               prefix="¥"
               valueStyle={{ color: netAmount >= 0 ? "#34C759" : "#FF3B30" }}
             />

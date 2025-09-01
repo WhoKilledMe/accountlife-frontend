@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Form, Input, Button, Space, Modal, message, Drawer, Descriptions } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import type { UserDto } from "../services/types";
@@ -21,10 +21,6 @@ export default function UsersAdmin() {
   const [detailOpen, setDetailOpen] = useState(false);
   const [detailLoading, setDetailLoading] = useState(false);
   const [detail, setDetail] = useState<UserDto | null>(null);
-
-  useEffect(() => {
-    // reserved for future side effects when search/pagination changes
-  }, [page, pageSize, search.username, search.email]);
 
   const columns: ColumnsType<UserDto> = useMemo(() => [
     { title: "ID", dataIndex: "id", width: 80, sorter: (a, b) => (a.id || 0) - (b.id || 0) },
@@ -86,7 +82,7 @@ export default function UsersAdmin() {
   return (
     <div style={{ display: "grid", gap: 16 }}>
       <FormCard>
-        <Form form={form} layout="inline" onFinish={(values) => setSearch(values)}>
+        <Form form={form} layout="inline" onFinish={(values) => { setSearch(values); setPage(1); setTableKey((k) => k + 1); }}>
           <Form.Item name="username" label="用户名">
             <Input allowClear placeholder="模糊搜索用户名" />
           </Form.Item>
@@ -96,7 +92,7 @@ export default function UsersAdmin() {
           <Form.Item>
             <Space>
               <Button type="primary" htmlType="submit">查询</Button>
-              <Button onClick={() => { form.resetFields(); setSearch({}); }}>重置</Button>
+              <Button onClick={() => { form.resetFields(); setSearch({}); setPage(1); setTableKey((k) => k + 1); }}>重置</Button>
               <Button type="dashed" onClick={() => { setEditing(null); editForm.resetFields(); setEditOpen(true); }}>新建</Button>
             </Space>
           </Form.Item>

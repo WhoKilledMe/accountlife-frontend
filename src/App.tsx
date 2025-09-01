@@ -4,15 +4,15 @@ import { ConfigProvider, theme as antdTheme } from "antd";
 import { useState } from "react";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
-import Users from "./pages/Users";
+// Users removed per requirements
 import Categories from "./pages/Categories";
 import Accounts from "./pages/Accounts";
 import Transactions from "./pages/Transactions";
 import Budgets from "./pages/Budgets";
 import Keywords from "./pages/Keywords";
 import Upload from "./pages/Upload";
+import UserGroups from "./pages/UserGroups";
 import UsersAdmin from "./pages/UsersAdmin";
-import UserPage from "./pages/UserPage";
 import Login from "./pages/Login";
 
 const queryClient = new QueryClient({
@@ -77,9 +77,8 @@ export default function App() {
             <Route path="/login" element={<Login />} />
             <Route element={<Layout />}> 
               <Route path="/" element={<Home />} />
-              <Route path="/users" element={<Users />} />
               <Route path="/users/admin" element={<UsersAdmin />} />
-              <Route path="/admin/users" element={<UserPage />} />
+              <Route path="/usergroups" element={<UserGroups />} />
               <Route path="/categories" element={<Categories />} />
               <Route path="/accounts" element={<Accounts />} />
               <Route path="/transactions" element={<Transactions />} />
