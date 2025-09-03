@@ -174,9 +174,11 @@ export interface AccountTransactionDto {
   id?: number;
   userId?: number;
   accountId?: number;
+  accountName?: string;
   type?: number;
   amount?: number;
   categoryId?: number;
+  categoryName?: string;
   relatedTransactionId?: number;
   description?: string;
   transactionTime?: string;
@@ -195,4 +197,39 @@ export interface ApiResponse<T> {
   message?: string;
   data?: T;
   timestamp?: string;
+}
+
+export interface StatisticsDto {
+  id?: number;
+  userId?: number;
+  type?: string;
+  name?: string;
+  value?: number;
+  unit?: string;
+  date?: string; // date
+  period?: string;
+  categoryId?: number;
+  categoryName?: string;
+  accountId?: number;
+  accountName?: string;
+  income?: number;
+  expense?: number;
+  balance?: number;
+  percentage?: number;
+  target?: number;
+  completionRate?: number;
+  createdAt?: string; // date-time
+  updatedAt?: string; // date-time
+}
+
+export interface PageResponse<T> {
+  content: T[];
+  pageNumber: number;
+  pageSize: number;
+  totalElements: number;
+  totalPages: number;
+  hasNext: boolean;
+  hasPrevious: boolean;
+  isFirst: boolean;
+  isLast: boolean;
 }

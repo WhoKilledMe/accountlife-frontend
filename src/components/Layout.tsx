@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect } from "react";
 import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { http } from "../lib/http";
+import { useTheme } from "../contexts/ThemeContext";
 import {
   Layout as AntLayout,
   Menu,
@@ -38,21 +39,7 @@ export default function Layout() {
   const location = useLocation();
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
-  // 主题切换处理
-  const handleThemeChange = (checked: boolean) => {
-    setIsDarkMode(checked);
-    localStorage.setItem('theme', checked ? 'dark' : 'light');
-  };
-
-  // 初始化主题
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-      setIsDarkMode(savedTheme === 'dark');
-    }
-  }, []);
+  const { isDarkMode, toggleTheme } = useTheme();
   // 路由守卫：无token跳转登录
   useEffect(() => {
     try {
@@ -313,7 +300,7 @@ export default function Layout() {
               <Switch
                 size="small"
                 checked={isDarkMode}
-                onChange={handleThemeChange}
+                onChange={toggleTheme}
               />
               <span style={{ fontSize: 12, color: "#666" }}>暗色</span>
             </Space>
