@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { Form, Input, Button, Space, Modal, message, Drawer, Descriptions } from "antd";
+import { useNavigate } from "react-router-dom";
 import type { ColumnsType } from "antd/es/table";
 import type { UserDto } from "../services/types";
 import { listUsers, createUser, updateUser, deleteUser, getUser } from "../api/users";
@@ -7,10 +8,10 @@ import FormCard from "../components/FormCard";
 import PaginatedTable from "../components/PaginatedTable";
 
 export default function UsersAdmin() {
+  const navigate = useNavigate();
   const [form] = Form.useForm();
   const [editForm] = Form.useForm<UserDto>();
 
-  const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [search, setSearch] = useState<{ username?: string; email?: string }>({});
   const [tableKey, setTableKey] = useState(0);
@@ -50,6 +51,10 @@ export default function UsersAdmin() {
           >查看</Button>
           <Button
             type="link"
+            onClick={() => navigate(`/mail-configs?userId=${record.id}`)}
+          >邮箱配置</Button>
+          <Button
+            type="link"
             onClick={() => {
               setEditing(record);
               editForm.setFieldsValue(record as any);
@@ -82,7 +87,7 @@ export default function UsersAdmin() {
   return (
     <div style={{ display: "grid", gap: 16 }}>
       <FormCard>
-        <Form form={form} layout="inline" onFinish={(values) => { setSearch(values); setPage(1); setTableKey((k) => k + 1); }}>
+        <Form form={form} layout="inline" onFinish={(values) => { setSearch(values); setTableKey((k) => k + 1); }}>
           <Form.Item name="username" label="用户名">
             <Input allowClear placeholder="模糊搜索用户名" />
           </Form.Item>
@@ -92,7 +97,7 @@ export default function UsersAdmin() {
           <Form.Item>
             <Space>
               <Button type="primary" htmlType="submit">查询</Button>
-              <Button onClick={() => { form.resetFields(); setSearch({}); setPage(1); setTableKey((k) => k + 1); }}>重置</Button>
+              <Button onClick={() => { form.resetFields(); setSearch({}); setTableKey((k) => k + 1); }}>重置</Button>
               <Button type="dashed" onClick={() => { setEditing(null); editForm.resetFields(); setEditOpen(true); }}>新建</Button>
             </Space>
           </Form.Item>
@@ -105,7 +110,6 @@ export default function UsersAdmin() {
           columns={columns}
           fetchPage={async ({ page: p, pageSize: ps }) => {
             const res = await listUsers({ page: p, pageSize: ps, ...search });
-            setPage(p);
             setPageSize(ps);
             return { items: res.items, total: res.total };
           }}

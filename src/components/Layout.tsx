@@ -81,8 +81,10 @@ export default function Layout() {
         icon: <BankOutlined />,
         children: [
           { key: "accounts", label: <NavLink to="/accounts">账户管理</NavLink>, icon: <BankOutlined /> },
+          { key: "businesses", label: <NavLink to="/businesses">业务交易</NavLink>, icon: <BankOutlined /> },
           { key: "transactions", label: <NavLink to="/transactions">交易记录</NavLink>, icon: <TransactionOutlined /> },
           { key: "budgets", label: <NavLink to="/budgets">预算管理</NavLink>, icon: <PieChartOutlined /> },
+          { key: "account-logs", label: <NavLink to="/accounts/logs">账单上传与日志</NavLink>, icon: <UploadOutlined /> },
         ],
       },
       {
@@ -93,6 +95,8 @@ export default function Layout() {
           { key: "categories", label: <NavLink to="/categories">分类管理</NavLink>, icon: <TagsOutlined /> },
           { key: "keywords", label: <NavLink to="/keywords">关键词映射</NavLink>, icon: <FileTextOutlined /> },
           { key: "upload", label: <NavLink to="/upload">文件上传</NavLink>, icon: <UploadOutlined /> },
+          { key: "mail-configs", label: <NavLink to="/mail-configs">邮箱配置</NavLink>, icon: <SettingOutlined /> },
+          { key: "admin-mail-configs", label: <NavLink to="/admin/mail-configs">管理员邮箱设置</NavLink>, icon: <SettingOutlined /> },
         ],
       },
     ],
@@ -106,6 +110,7 @@ export default function Layout() {
     if (p.startsWith("/users/admin")) return "users-admin";
     if (p.startsWith("/usergroups")) return "usergroups";
     if (p.startsWith("/categories")) return "categories";
+    if (p.startsWith("/accounts") && p.includes("/logs")) return "account-logs";
     if (p.startsWith("/accounts")) return "accounts";
     if (p.startsWith("/transactions")) return "transactions";
     if (p.startsWith("/budgets")) return "budgets";
@@ -120,7 +125,7 @@ export default function Layout() {
     if (p === "/") return ["dashboard"];
     if (p.startsWith("/users") || p.startsWith("/usergroups")) return ["user-management"];
     if (p.startsWith("/accounts") || p.startsWith("/transactions") || p.startsWith("/budgets")) return ["financial"];
-    if (p.startsWith("/categories") || p.startsWith("/keywords") || p.startsWith("/upload")) return ["system"];
+    if (p.startsWith("/categories") || p.startsWith("/keywords") || p.startsWith("/upload") || p.startsWith("/mail-configs")) return ["system"];
     return ["dashboard"];
   }, [location.pathname]);
 
@@ -173,6 +178,7 @@ export default function Layout() {
     if (p.startsWith("/users/admin")) return "用户管理";
     if (p.startsWith("/usergroups")) return "用户组管理";
     if (p.startsWith("/categories")) return "分类管理";
+    if (p.startsWith("/accounts") && p.includes("/logs")) return "账单上传与日志";
     if (p.startsWith("/accounts")) return "账户管理";
     if (p.startsWith("/transactions")) return "交易记录";
     if (p.startsWith("/budgets")) return "预算管理";

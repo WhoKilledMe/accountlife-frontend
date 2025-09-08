@@ -233,3 +233,19 @@ export interface PageResponse<T> {
   isFirst: boolean;
   isLast: boolean;
 }
+
+export interface AccountConfigDto {
+  id?: number;
+  name?: string;
+  type?: number;
+  platformCode?: string;
+  websiteUrl?: string;
+  description?: string;
+  logoUrl?: string;
+  sortOrder?: number;
+  isActive?: boolean;
+  createdBy?: string;
+  createdAt?: string;
+  updatedBy?: string;
+  updatedAt?: string;
+}

@@ -1,18 +1,20 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { http } from "../lib/http";
-import type { AssetAccountDto, PageResponse } from "../services/types";
+import type { AssetAccountDto } from "../services/types";
 import { useState } from "react";
-import { Card, Button, Input, Form, Space, message, Row, Col, Tag, Modal, Select } from "antd";
+import { Card, Button, Input, Form, Space, message, Tag, Modal, Select } from "antd";
+import { useNavigate } from "react-router-dom";
 import PaginatedTable from "../components/PaginatedTable";
 import { PlusOutlined, DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 
 export default function Accounts() {
+  const navigate = useNavigate();
   const qc = useQueryClient();
   const [form] = Form.useForm();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editingAccount, setEditingAccount] = useState<AssetAccountDto | null>(null);
 
-  const { data, isLoading, error } = useQuery<AssetAccountDto[]>({
+  const { data } = useQuery<AssetAccountDto[]>({
     queryKey: ["accounts"],
     queryFn: async () => (await http.get("/assetaccount")).data,
   });
@@ -179,6 +181,13 @@ export default function Accounts() {
             icon={<DeleteOutlined />}
             onClick={() => handleDelete(record.id)}
           />
+          <Button
+            type="link"
+            size="small"
+            onClick={() => navigate(`/accounts/${record.id}/logs`)}
+          >
+            账单日志
+          </Button>
         </Space>
       ),
     },

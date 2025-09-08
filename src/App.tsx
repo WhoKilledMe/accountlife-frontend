@@ -11,6 +11,10 @@ import Transactions from "./pages/Transactions";
 import Budgets from "./pages/Budgets";
 import Keywords from "./pages/Keywords";
 import Upload from "./pages/Upload";
+import AccountUploadLogs from "./pages/AccountUploadLogs";
+import Businesses from "./pages/Businesses";
+import MailConfigs from "./pages/MailConfigs";
+import AdminMailConfigs from "./pages/AdminMailConfigs";
 import UserGroups from "./pages/UserGroups";
 import UsersAdmin from "./pages/UsersAdmin";
 import Login from "./pages/Login";
@@ -91,10 +95,15 @@ function AppContent() {
             <Route path="/usergroups" element={<UserGroups />} />
             <Route path="/categories" element={<Categories />} />
             <Route path="/accounts" element={<Accounts />} />
+            <Route path="/businesses" element={<Businesses />} />
+            <Route path="/accounts/logs" element={<AccountUploadLogs />} />
+            <Route path="/accounts/:accountId/logs" element={<AccountUploadLogs />} />
             <Route path="/transactions" element={<Transactions />} />
             <Route path="/budgets" element={<Budgets />} />
             <Route path="/keywords" element={<Keywords />} />
             <Route path="/upload" element={<Upload />} />
+            <Route path="/mail-configs" element={<MailConfigs />} />
+            <Route path="/admin/mail-configs" element={<AdminMailConfigs />} />
           </Route>
         </Routes>
       </BrowserRouter>
