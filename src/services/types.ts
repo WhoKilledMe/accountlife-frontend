@@ -163,6 +163,7 @@ export interface AssetAccountDto {
   isVirtual?: boolean;
   creditLimit?: number;
   currency?: string;
+  billEmail?: string;
   createdBy?: string;
   createdAt?: string;
   updatedBy?: string;
@@ -244,6 +245,7 @@ export interface AccountConfigDto {
   logoUrl?: string;
   sortOrder?: number;
   isActive?: boolean;
+  billEmail?: string;
   createdBy?: string;
   createdAt?: string;
   updatedBy?: string;

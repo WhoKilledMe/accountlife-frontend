@@ -97,6 +97,7 @@ export default function Layout() {
           { key: "upload", label: <NavLink to="/upload">文件上传</NavLink>, icon: <UploadOutlined /> },
           { key: "mail-configs", label: <NavLink to="/mail-configs">邮箱配置</NavLink>, icon: <SettingOutlined /> },
           { key: "admin-mail-configs", label: <NavLink to="/admin/mail-configs">管理员邮箱设置</NavLink>, icon: <SettingOutlined /> },
+          { key: "system-account-configs", label: <NavLink to="/system/account-configs">系统账户配置</NavLink>, icon: <SettingOutlined /> },
         ],
       },
     ],
@@ -116,6 +117,7 @@ export default function Layout() {
     if (p.startsWith("/budgets")) return "budgets";
     if (p.startsWith("/keywords")) return "keywords";
     if (p.startsWith("/upload")) return "upload";
+    if (p.startsWith("/system/account-configs")) return "system-account-configs";
     return "home";
   }, [location.pathname]);
 
@@ -125,7 +127,7 @@ export default function Layout() {
     if (p === "/") return ["dashboard"];
     if (p.startsWith("/users") || p.startsWith("/usergroups")) return ["user-management"];
     if (p.startsWith("/accounts") || p.startsWith("/transactions") || p.startsWith("/budgets")) return ["financial"];
-    if (p.startsWith("/categories") || p.startsWith("/keywords") || p.startsWith("/upload") || p.startsWith("/mail-configs")) return ["system"];
+    if (p.startsWith("/categories") || p.startsWith("/keywords") || p.startsWith("/upload") || p.startsWith("/mail-configs") || p.startsWith("/system/account-configs")) return ["system"];
     return ["dashboard"];
   }, [location.pathname]);
 
@@ -184,6 +186,7 @@ export default function Layout() {
     if (p.startsWith("/budgets")) return "预算管理";
     if (p.startsWith("/keywords")) return "关键词映射";
     if (p.startsWith("/upload")) return "文件上传";
+    if (p.startsWith("/system/account-configs")) return "系统账户配置";
     return "AccountLife";
   };
 

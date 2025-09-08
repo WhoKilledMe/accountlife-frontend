@@ -17,4 +17,33 @@ export const accountConfigApi = {
     const params = name ? `?name=${encodeURIComponent(name)}` : "";
     return http.get(`/accountconfig/search${params}`);
   },
+
+  // 分页查询（数据库分页 + 条件筛选）
+  page: (
+    page: number,
+    size: number,
+    filter?: Partial<AccountConfigDto>
+  ): Promise<{ data: { content: AccountConfigDto[]; totalElements: number } }> => {
+    return http.post(`/accountconfig/page?page=${page}&size=${size}`, filter ?? {});
+  },
+
+  // 详情
+  getById: (id: number): Promise<{ data: AccountConfigDto }> => {
+    return http.get(`/accountconfig/${id}`);
+  },
+
+  // 新增
+  create: (payload: Partial<AccountConfigDto>): Promise<{ data: AccountConfigDto }> => {
+    return http.post(`/accountconfig`, payload);
+  },
+
+  // 更新
+  update: (payload: Partial<AccountConfigDto>): Promise<{ data: AccountConfigDto }> => {
+    return http.put(`/accountconfig`, payload);
+  },
+
+  // 删除
+  remove: (id: number): Promise<void> => {
+    return http.delete(`/accountconfig/${id}`);
+  },
 };

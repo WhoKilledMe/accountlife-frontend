@@ -15,6 +15,7 @@ import AccountUploadLogs from "./pages/AccountUploadLogs";
 import Businesses from "./pages/Businesses";
 import MailConfigs from "./pages/MailConfigs";
 import AdminMailConfigs from "./pages/AdminMailConfigs";
+import AccountConfigs from "./pages/AccountConfigs";
 import UserGroups from "./pages/UserGroups";
 import UsersAdmin from "./pages/UsersAdmin";
 import Login from "./pages/Login";
@@ -104,6 +105,7 @@ function AppContent() {
             <Route path="/upload" element={<Upload />} />
             <Route path="/mail-configs" element={<MailConfigs />} />
             <Route path="/admin/mail-configs" element={<AdminMailConfigs />} />
+            <Route path="/system/account-configs" element={<AccountConfigs />} />
           </Route>
         </Routes>
       </BrowserRouter>

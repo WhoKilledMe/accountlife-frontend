@@ -11,6 +11,7 @@ import {
   PieChartOutlined,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import { TransactionTypeEnum, getEnumItemByKey } from "./enums";
 
 export default function Home() {
   // 获取当前月份和年份
@@ -101,12 +102,8 @@ export default function Home() {
       key: "type",
       width: 80,
       render: (type: number) => {
-        const typeText = type === 1 ? "收入" : "支出";
-        return (
-          <Tag color={type === 1 ? "green" : "red"}>
-            {typeText}
-          </Tag>
-        );
+        const item = getEnumItemByKey(TransactionTypeEnum, type);
+        return <Tag color={item?.color || "default"}>{item?.value || "未知"}</Tag>;
       },
     },
     {

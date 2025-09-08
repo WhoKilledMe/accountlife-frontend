@@ -2,9 +2,11 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { http } from "../lib/http";
 import type { TransactionCategoryDto, PageResponse } from "../services/types";
 import { useMemo, useState, useEffect } from "react";
-import { Card, Button, Input, Form, Space, message, Tag, Modal, Select } from "antd";
+import { Card, Input, Form, Space, message, Tag, Modal, Select } from "antd";
 import PaginatedTable from "../components/PaginatedTable";
-import { PlusOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
+import { CreateButton, EditButton, DeleteButton } from "../components/ActionButtons";
+import { TransactionTypeEnum, getEnumItemByKey, toSelectOptions } from "./enums";
 
 export default function Categories() {
   const qc = useQueryClient();
@@ -105,9 +107,8 @@ export default function Categories() {
       key: "type",
       width: 100,
       render: (type: number) => {
-        const map: any = { 1: { text: "收入", color: "green" }, 2: { text: "支出", color: "red" }, 3: { text: "转出", color: "blue" }, 4: { text: "转入", color: "yellow" } };
-        const cfg = map[type] || { text: "未知", color: "default" };
-        return <Tag color={cfg.color}>{cfg.text}</Tag>;
+        const item = getEnumItemByKey(TransactionTypeEnum, type);
+        return <Tag color={item?.color || "default"}>{item?.value || "未知"}</Tag>;
       },
     },
     {
@@ -125,8 +126,8 @@ export default function Categories() {
       width: 160,
       render: (_: any, record: TransactionCategoryDto) => (
         <Space size="small">
-          <Button type="text" size="small" icon={<EditOutlined />} onClick={() => handleEdit(record)} disabled={record.userId == null} />
-          <Button type="text" size="small" danger icon={<DeleteOutlined />} onClick={() => handleDelete(record.id)} disabled={record.userId == null} />
+          <EditButton permKey="category:edit" onClick={() => handleEdit(record)} disabled={record.userId == null} />
+          <DeleteButton permKey="category:delete" onConfirm={() => handleDelete(record.id)} disabled={record.userId == null} />
         </Space>
       ),
     },
@@ -154,9 +155,9 @@ export default function Categories() {
       <Card style={{ marginBottom: "24px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <Space>
-            <Button type="primary" icon={<PlusOutlined />} onClick={handleCreate}>
+            <CreateButton icon={<PlusOutlined />} permKey="category:create" onClick={handleCreate}>
               新建分类
-            </Button>
+            </CreateButton>
           </Space>
           <Space>
             <Input.Search
@@ -218,7 +219,7 @@ export default function Categories() {
             <Input placeholder="请输入分类名称" />
           </Form.Item>
           <Form.Item name="type" label="类型" rules={[{ required: true, message: "请选择类型" }]}>
-            <Select placeholder="请选择类型" options={[{ label: "收入", value: 1 }, { label: "支出", value: 2 }]} />
+            <Select placeholder="请选择类型" options={toSelectOptions(TransactionTypeEnum)} />
           </Form.Item>
           <Form.Item name="parentId" label="父分类">
             <Select

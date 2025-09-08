@@ -2,12 +2,14 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { http } from "../lib/http";
 import type { ApiResponse, BudgetDto } from "../services/types";
 import { useState } from "react";
-import { Card, Button, Input, Form, Space, message, Statistic, Row, Col, Tag, Modal } from "antd";
+import { Card, Input, Form, Space, message, Statistic, Row, Col, Tag, Modal, Button } from "antd";
 import PaginatedTable from "../components/PaginatedTable";
-import { PlusOutlined, DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
+import { PlusOutlined, EyeOutlined } from "@ant-design/icons";
+import { CreateButton, EditButton, DeleteButton } from "../components/ActionButtons";
+import { BudgetStatusEnum, getEnumItemByKey } from "./enums";
 
 // 模拟数据
-const mockBudgets: BudgetDto[] = [
+const mockBudgets: any[] = [
   {
     id: 1,
     userId: 1,
@@ -81,7 +83,7 @@ export default function Budgets() {
   const [editingBudget, setEditingBudget] = useState<BudgetDto | null>(null);
 
   // 使用模拟数据，避免后端错误
-  const { data, isLoading, error } = useQuery<ApiResponse<BudgetDto[]>>({
+  const { data } = useQuery<ApiResponse<BudgetDto[]>>({
     queryKey: ["budgets", userId],
     queryFn: async () => {
       try {
@@ -195,7 +197,9 @@ export default function Budgets() {
       key: "remainingAmount",
       width: 120,
       render: (remainingAmount: number, record: BudgetDto) => {
-        const percentage = (record.usedAmount / record.amount) * 100;
+        const used = record.usedAmount || 0;
+        const amt = record.amount || 0;
+        const percentage = amt > 0 ? (used / amt) * 100 : 0;
         let color = "green";
         if (percentage > 80) color = "red";
         else if (percentage > 60) color = "orange";
@@ -214,13 +218,8 @@ export default function Budgets() {
       key: "status",
       width: 100,
       render: (status: string) => {
-        const statusMap = {
-          ACTIVE: { text: "活跃", color: "green" },
-          INACTIVE: { text: "停用", color: "red" },
-          EXPIRED: { text: "过期", color: "orange" },
-        };
-        const config = statusMap[status as keyof typeof statusMap] || { text: status, color: "default" };
-        return <Tag color={config.color}>{config.text}</Tag>;
+        const item = getEnumItemByKey(BudgetStatusEnum, status);
+        return <Tag color={item?.color || "default"}>{item?.value || status}</Tag>;
       },
     },
     {
@@ -229,34 +228,18 @@ export default function Budgets() {
       width: 150,
       render: (_: any, record: BudgetDto) => (
         <Space size="small">
-          <Button
-            type="text"
-            size="small"
-            icon={<EyeOutlined />}
-            onClick={() => message.info("查看详情功能开发中")}
-          />
-          <Button
-            type="text"
-            size="small"
-            icon={<EditOutlined />}
-            onClick={() => handleEdit(record)}
-          />
-          <Button
-            type="text"
-            size="small"
-            danger
-            icon={<DeleteOutlined />}
-            onClick={() => handleDelete(record.id)}
-          />
+          <Button type="text" size="small" icon={<EyeOutlined />} onClick={() => message.info("查看详情功能开发中")} />
+          <EditButton permKey="budget:edit" onClick={() => handleEdit(record)} />
+          <DeleteButton permKey="budget:delete" onConfirm={() => handleDelete(record.id!)} />
         </Space>
       ),
     },
   ];
 
   // 计算统计数据
-  const totalBudget = budgets.reduce((sum, budget) => sum + budget.amount, 0);
-  const totalUsed = budgets.reduce((sum, budget) => sum + budget.usedAmount, 0);
-  const totalRemaining = budgets.reduce((sum, budget) => sum + budget.remainingAmount, 0);
+  const totalBudget = budgets.reduce((sum, budget) => sum + (budget.amount || 0), 0);
+  const totalUsed = budgets.reduce((sum, budget) => sum + (budget.usedAmount || 0), 0);
+  const totalRemaining = budgets.reduce((sum, budget) => sum + (budget.remainingAmount || 0), 0);
   const usagePercentage = totalBudget > 0 ? (totalUsed / totalBudget) * 100 : 0;
 
   return (
@@ -319,13 +302,7 @@ export default function Budgets() {
       <Card style={{ marginBottom: "24px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <Space>
-            <Button
-              type="primary"
-              icon={<PlusOutlined />}
-              onClick={handleCreate}
-            >
-              新建预算
-            </Button>
+            <CreateButton icon={<PlusOutlined />} permKey="budget:create" onClick={handleCreate}>新建预算</CreateButton>
           </Space>
           <Space>
             <Input.Search

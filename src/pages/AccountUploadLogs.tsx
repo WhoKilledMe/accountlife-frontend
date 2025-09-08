@@ -4,6 +4,7 @@ import { Card, Button, Space, message, Upload, Table, Tag, Typography, Input, Se
 import type { UploadProps } from "antd";
 import { UploadOutlined, ArrowLeftOutlined } from "@ant-design/icons";
 import { http } from "../lib/http";
+import { UploadLogStatusEnum, getEnumItemByKey } from "./enums";
 
 type LogDto = {
   id: number;
@@ -115,14 +116,8 @@ export default function AccountUploadLogs() {
   };
 
   const statusTag = (s?: string) => {
-    const map: Record<string, { color: string; text: string }> = {
-      PENDING: { color: "default", text: "待处理" },
-      PROCESSING: { color: "processing", text: "处理中" },
-      COMPLETED: { color: "success", text: "完成" },
-      FAILED: { color: "error", text: "失败" },
-    };
-    const cfg = (s && map[s]) || { color: "default", text: s || "-" } as any;
-    return <Tag color={cfg.color}>{cfg.text}</Tag>;
+    const item = getEnumItemByKey(UploadLogStatusEnum, (s as any));
+    return <Tag color={item?.color || "default"}>{item?.value || s || "-"}</Tag>;
   };
 
   const columns = useMemo(

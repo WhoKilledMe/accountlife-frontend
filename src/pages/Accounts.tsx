@@ -1,11 +1,14 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { http } from "../lib/http";
-import type { AssetAccountDto } from "../services/types";
+import type { AssetAccountDto, AccountConfigDto } from "../services/types";
 import { useState } from "react";
-import { Card, Button, Input, Form, Space, message, Tag, Modal, Select } from "antd";
+import { Card, Button, Input, Form, Space, message, Tag, Modal, Select, AutoComplete, Row, Col } from "antd";
 import { useNavigate } from "react-router-dom";
 import PaginatedTable from "../components/PaginatedTable";
-import { PlusOutlined, DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
+import { PlusOutlined, EyeOutlined, ImportOutlined, MailOutlined } from "@ant-design/icons";
+import { CreateButton, EditButton, DeleteButton } from "../components/ActionButtons";
+import { accountConfigApi } from "../api/accountConfig";
+import { AccountTypeEnum, getEnumItemByKey, toSelectOptions } from "./enums";
 
 export default function Accounts() {
   const navigate = useNavigate();
@@ -13,10 +16,16 @@ export default function Accounts() {
   const [form] = Form.useForm();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editingAccount, setEditingAccount] = useState<AssetAccountDto | null>(null);
+  const [showAccountConfigSelector, setShowAccountConfigSelector] = useState(false);
 
   const { data } = useQuery<AssetAccountDto[]>({
     queryKey: ["accounts"],
     queryFn: async () => (await http.get("/assetaccount")).data,
+  });
+
+  const { data: accountConfigs } = useQuery<AccountConfigDto[]>({
+    queryKey: ["accountConfigs"],
+    queryFn: async () => (await accountConfigApi.getAll()).data,
   });
 
   const createMutation = useMutation({
@@ -100,6 +109,15 @@ export default function Accounts() {
     }
   };
 
+  const handleImportFromConfig = (config: AccountConfigDto) => {
+    form.setFieldsValue({
+      platformCode: config.platformCode,
+      billEmail: config.billEmail,
+    });
+    setShowAccountConfigSelector(false);
+    message.success(`已从配置"${config.name}"导入平台代码和账单邮箱`);
+  };
+
   const columns = [
     {
       title: "ID",
@@ -119,14 +137,8 @@ export default function Accounts() {
       key: "type",
       width: 120,
       render: (type: number) => {
-        const typeMap = {
-          1: { text: "银行", color: "blue" },
-          2: { text: "平台", color: "green" },
-          3: { text: "信用钱包", color: "orange" },
-          4: { text: "钱包", color: "purple" },
-        };
-        const config = typeMap[type as keyof typeof typeMap] || { text: "未知", color: "default" };
-        return <Tag color={config.color}>{config.text}</Tag>;
+        const item = getEnumItemByKey(AccountTypeEnum, type);
+        return <Tag color={item?.color || "default"}>{item?.value || "未知"}</Tag>;
       },
     },
     {
@@ -150,6 +162,13 @@ export default function Accounts() {
       width: 80,
     },
     {
+      title: "账单邮箱",
+      dataIndex: "billEmail",
+      key: "billEmail",
+      width: 200,
+      render: (email: string) => email || "-",
+    },
+    {
       title: "余额",
       dataIndex: "balance",
       key: "balance",
@@ -168,19 +187,8 @@ export default function Accounts() {
             icon={<EyeOutlined />}
             onClick={() => message.info("查看详情功能开发中")}
           />
-          <Button
-            type="text"
-            size="small"
-            icon={<EditOutlined />}
-            onClick={() => handleEdit(record)}
-          />
-          <Button
-            type="text"
-            size="small"
-            danger
-            icon={<DeleteOutlined />}
-            onClick={() => handleDelete(record.id)}
-          />
+          <EditButton permKey="account:edit" onClick={() => handleEdit(record)} />
+          <DeleteButton permKey="account:delete" onConfirm={() => handleDelete(record.id)} />
           <Button
             type="link"
             size="small"
@@ -209,13 +217,7 @@ export default function Accounts() {
       <Card style={{ marginBottom: "24px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <Space>
-            <Button
-              type="primary"
-              icon={<PlusOutlined />}
-              onClick={handleCreate}
-            >
-              新建账户
-            </Button>
+            <CreateButton icon={<PlusOutlined />} permKey="account:create" onClick={handleCreate}>新建账户</CreateButton>
           </Space>
           <Space>
             <Input.Search
@@ -291,19 +293,34 @@ export default function Accounts() {
           >
             <Select
               placeholder="请选择账户类型"
-              options={[
-                { label: "银行", value: 1 },
-                { label: "平台", value: 2 },
-                { label: "信用钱包", value: 3 },
-                { label: "钱包", value: 4 },
-              ]}
+              options={toSelectOptions(AccountTypeEnum)}
             />
           </Form.Item>
           <Form.Item
             name="platformCode"
             label="平台代码"
           >
-            <Input placeholder="可选，请输入平台代码" />
+            <Select
+              placeholder="可选，选择或输入平台代码"
+              showSearch
+              allowClear
+              onChange={(value) => {
+                // 当选择平台代码时，自动填充对应的账单邮箱
+                if (value && accountConfigs) {
+                  const config = accountConfigs.find(c => c.platformCode === value);
+                  if (config?.billEmail) {
+                    form.setFieldsValue({ billEmail: config.billEmail });
+                  }
+                }
+              }}
+              options={accountConfigs?.map(config => ({
+                value: config.platformCode || '',
+                label: `${config.name} (${config.platformCode || '无代码'})`,
+              })).filter(option => option.value) || []}
+              filterOption={(inputValue, option) =>
+                option?.label?.toLowerCase().includes(inputValue.toLowerCase()) || false
+              }
+            />
           </Form.Item>
           <Form.Item
             name="accountNumber"
@@ -319,12 +336,85 @@ export default function Accounts() {
             <Input placeholder="请输入币种，如：CNY" />
           </Form.Item>
           <Form.Item
+            name="billEmail"
+            label="账单邮箱"
+          >
+            <Row gutter={8}>
+              <Col flex="auto">
+                <AutoComplete
+                  placeholder="可选，输入或选择账单邮箱"
+                  options={accountConfigs?.map(config => ({
+                    value: config.billEmail || '',
+                    label: `${config.name} - ${config.billEmail || '无邮箱'}`,
+                  })).filter(option => option.value) || []}
+                  filterOption={(inputValue, option) =>
+                    option?.label?.toLowerCase().includes(inputValue.toLowerCase()) || false
+                  }
+                />
+              </Col>
+              <Col>
+                <Button
+                  type="default"
+                  icon={<ImportOutlined />}
+                  onClick={() => setShowAccountConfigSelector(true)}
+                  title="从账户配置导入"
+                >
+                  导入
+                </Button>
+              </Col>
+            </Row>
+          </Form.Item>
+          <Form.Item
             name="balance"
             label="余额"
           >
             <Input type="number" placeholder="可选，请输入初始余额" />
           </Form.Item>
         </Form>
+      </Modal>
+
+      {/* 账户配置选择器 */}
+      <Modal
+        title="从账户配置导入"
+        open={showAccountConfigSelector}
+        onCancel={() => setShowAccountConfigSelector(false)}
+        footer={null}
+        width={800}
+      >
+        <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
+          {accountConfigs?.filter(config => config.billEmail)?.map((config) => (
+            <Card
+              key={config.id}
+              size="small"
+              style={{ marginBottom: '8px', cursor: 'pointer' }}
+              hoverable
+              onClick={() => handleImportFromConfig(config)}
+            >
+              <Row align="middle" justify="space-between">
+                <Col>
+                  <Space>
+                    <MailOutlined style={{ color: '#1890ff' }} />
+                    <div>
+                      <div style={{ fontWeight: 500 }}>{config.name}</div>
+                      <div style={{ fontSize: '12px', color: '#666' }}>
+                        平台代码: {config.platformCode || '无'} | 账单邮箱: {config.billEmail}
+                      </div>
+                    </div>
+                  </Space>
+                </Col>
+                <Col>
+                  <Button type="link" size="small">
+                    选择
+                  </Button>
+                </Col>
+              </Row>
+            </Card>
+          )) || (
+            <div style={{ textAlign: 'center', padding: '40px', color: '#999' }}>
+              暂无可用的账户配置
+            </div>
+          )}
+        </div>
       </Modal>
     </div>
   );

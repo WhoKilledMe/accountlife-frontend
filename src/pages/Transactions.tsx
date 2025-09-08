@@ -4,8 +4,10 @@ import type { AccountTransactionDto, StatisticsDto } from "../services/types";
 import { useState } from "react";
 import { Card, Button, Input, Form, Space, message, Statistic, Row, Col, Tag, Modal, Spin, Select } from "antd";
 import PaginatedTable from "../components/PaginatedTable";
-import { PlusOutlined, DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
+import { PlusOutlined, EyeOutlined } from "@ant-design/icons";
+import { CreateButton, EditButton, DeleteButton } from "../components/ActionButtons";
 import { statisticsApi } from "../api/statistics";
+import { TransactionTypeEnum, getEnumItemByKey, toSelectOptions } from "./enums";
 import { transactionsApi, transactionCategoryApi, assetAccountApi } from "../api/transactions";
 
 // 模拟数据
@@ -312,12 +314,8 @@ export default function Transactions() {
       key: "type",
       width: 100,
       render: (type: number) => {
-        const typeMap = {
-          1: { text: "收入", color: "green" },
-          2: { text: "支出", color: "red" },
-        };
-        const config = typeMap[type as keyof typeof typeMap] || { text: "未知", color: "default" };
-        return <Tag color={config.color}>{config.text}</Tag>;
+        const item = getEnumItemByKey(TransactionTypeEnum, type);
+        return <Tag color={item?.color || "default"}>{item?.value || "未知"}</Tag>;
       },
     },
     {
@@ -373,19 +371,8 @@ export default function Transactions() {
             icon={<EyeOutlined />}
             onClick={() => message.info("查看详情功能开发中")}
           />
-          <Button
-            type="text"
-            size="small"
-            icon={<EditOutlined />}
-            onClick={() => handleEdit(record)}
-          />
-          <Button
-            type="text"
-            size="small"
-            danger
-            icon={<DeleteOutlined />}
-            onClick={() => handleDelete(record.id)}
-          />
+          <EditButton permKey="transaction:edit" onClick={() => handleEdit(record)} />
+          <DeleteButton permKey="transaction:delete" onConfirm={() => handleDelete(record.id)} />
         </Space>
       ),
     },
@@ -395,7 +382,7 @@ export default function Transactions() {
   const totalIncome = (monthlyStats?.income as number) || 0;
   const totalExpense = (monthlyStats?.expense as number) || 0;
   const netAmount = totalIncome - totalExpense;
-  const transactionCount = transactions.length;
+  // const transactionCount = transactions.length;
 
   // 统计加载状态
   const statsLoading = monthlyStatsLoading || yearlyStatsLoading || totalAssetsLoading;
@@ -515,13 +502,7 @@ export default function Transactions() {
       <Card style={{ marginBottom: "24px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <Space>
-            <Button
-              type="primary"
-              icon={<PlusOutlined />}
-              onClick={handleCreate}
-            >
-              新建交易
-            </Button>
+            <CreateButton icon={<PlusOutlined />} permKey="transaction:create" onClick={handleCreate}>新建交易</CreateButton>
           </Space>
           <Space>
             <Input.Search
@@ -612,10 +593,7 @@ export default function Transactions() {
           >
             <Select
               placeholder="请选择交易类型"
-              options={[
-                { label: "收入", value: 1 },
-                { label: "支出", value: 2 },
-              ]}
+              options={toSelectOptions(TransactionTypeEnum)}
             />
           </Form.Item>
           <Form.Item
