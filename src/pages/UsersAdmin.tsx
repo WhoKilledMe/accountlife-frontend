@@ -1,11 +1,13 @@
 import { useMemo, useState } from "react";
-import { Form, Input, Button, Space, Modal, message, Drawer, Descriptions } from "antd";
+import { Form, Input, Button, Space, Modal, message, Drawer, Descriptions, Card } from "antd";
 import { useNavigate } from "react-router-dom";
 import type { ColumnsType } from "antd/es/table";
 import type { UserDto } from "../services/types";
 import { listUsers, createUser, updateUser, deleteUser, getUser } from "../api/users";
-import FormCard from "../components/FormCard";
+// removed unused FormCard to align with Accounts page layout
 import PaginatedTable from "../components/PaginatedTable";
+import { PlusOutlined } from "@ant-design/icons";
+import { CreateButton, EditButton, DeleteButton } from "../components/ActionButtons";
 
 export default function UsersAdmin() {
   const navigate = useNavigate();
@@ -53,58 +55,64 @@ export default function UsersAdmin() {
             type="link"
             onClick={() => navigate(`/mail-configs?userId=${record.id}`)}
           >邮箱配置</Button>
-          <Button
-            type="link"
-            onClick={() => {
-              setEditing(record);
-              editForm.setFieldsValue(record as any);
-              setEditOpen(true);
+          <EditButton permKey="user:edit" onClick={() => {
+            setEditing(record);
+            editForm.setFieldsValue(record as any);
+            setEditOpen(true);
+          }} />
+          <DeleteButton
+            permKey="user:delete"
+            onConfirm={async () => {
+              try {
+                await deleteUser(record.id!);
+                message.success("已删除");
+                setTableKey((k) => k + 1);
+              } catch (e: any) {
+                message.error(e?.message || "删除失败");
+              }
             }}
-          >编辑</Button>
-          <Button
-            type="link"
-            danger
-            onClick={async () => {
-              Modal.confirm({
-                title: `确认删除用户 #${record.id}?`,
-                onOk: async () => {
-                  try {
-                    await deleteUser(record.id!);
-                    message.success("已删除");
-                    setTableKey((k) => k + 1);
-                  } catch (e: any) {
-                    message.error(e?.message || "删除失败");
-                  }
-                },
-              });
-            }}
-          >删除</Button>
+          />
         </Space>
       ),
     },
   ], [editForm]);
 
   return (
-    <div style={{ display: "grid", gap: 16 }}>
-      <FormCard>
-        <Form form={form} layout="inline" onFinish={(values) => { setSearch(values); setTableKey((k) => k + 1); }}>
-          <Form.Item name="username" label="用户名">
-            <Input allowClear placeholder="模糊搜索用户名" />
-          </Form.Item>
-          <Form.Item name="email" label="邮箱">
-            <Input allowClear placeholder="模糊搜索邮箱" />
-          </Form.Item>
-          <Form.Item>
-            <Space>
-              <Button type="primary" htmlType="submit">查询</Button>
-              <Button onClick={() => { form.resetFields(); setSearch({}); setTableKey((k) => k + 1); }}>重置</Button>
-              <Button type="dashed" onClick={() => { setEditing(null); editForm.resetFields(); setEditOpen(true); }}>新建</Button>
-            </Space>
-          </Form.Item>
-        </Form>
-      </FormCard>
+    <div style={{ padding: "24px" }}>
+      <div style={{ marginBottom: "24px" }}>
+        <h2 style={{ margin: 0, fontSize: "24px", fontWeight: 600, color: "#1D1D1F" }}>
+          用户管理
+        </h2>
+        <p style={{ margin: "8px 0 0 0", color: "#86868B", fontSize: "14px" }}>
+          管理系统中的用户信息与配置
+        </p>
+      </div>
 
-      <div style={{ background: "#fff", padding: 0, borderRadius: 8 }}>
+      <Card style={{ marginBottom: "24px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <Space>
+            <CreateButton icon={<PlusOutlined />} permKey="user:create" onClick={() => { setEditing(null); editForm.resetFields(); setEditOpen(true); }}>
+              新建用户
+            </CreateButton>
+          </Space>
+          <Form form={form} layout="inline" onFinish={(values) => { setSearch(values); setTableKey((k) => k + 1); }}>
+            <Form.Item name="username" label="用户名">
+              <Input allowClear placeholder="模糊搜索用户名" style={{ width: 200 }} />
+            </Form.Item>
+            <Form.Item name="email" label="邮箱">
+              <Input allowClear placeholder="模糊搜索邮箱" style={{ width: 220 }} />
+            </Form.Item>
+            <Form.Item>
+              <Space>
+                <Button type="primary" htmlType="submit">查询</Button>
+                <Button onClick={() => { form.resetFields(); setSearch({}); setTableKey((k) => k + 1); }}>重置</Button>
+              </Space>
+            </Form.Item>
+          </Form>
+        </div>
+      </Card>
+
+      <Card>
         <PaginatedTable<UserDto>
           key={tableKey}
           columns={columns}
@@ -116,7 +124,7 @@ export default function UsersAdmin() {
           defaultPageSize={pageSize}
           rowKey={(r) => String(r.id)}
         />
-      </div>
+      </Card>
 
       <Modal
         open={editOpen}
@@ -127,6 +135,7 @@ export default function UsersAdmin() {
         }}
         okText="保存"
         destroyOnClose
+        width={600}
       >
         <Form<UserDto>
           form={editForm}

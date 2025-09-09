@@ -153,15 +153,7 @@ export default function Transactions() {
   });
 
   const createMutation = useMutation({
-    mutationFn: async (payload: Partial<AccountTransactionDto>) => {
-      try {
-        const response = await http.post("/accounttransaction", payload);
-        return response.data;
-      } catch (error) {
-        message.success("交易创建成功（模拟）");
-        return { code: 200, message: "success" };
-      }
-    },
+    mutationFn: async (payload: Partial<AccountTransactionDto>) => (await transactionsApi.create(payload)).data,
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["transactions"] });
       setIsModalVisible(false);
@@ -171,15 +163,7 @@ export default function Transactions() {
   });
 
   const updateMutation = useMutation({
-    mutationFn: async (payload: Partial<AccountTransactionDto>) => {
-      try {
-        const response = await http.put("/accounttransaction", payload);
-        return response.data;
-      } catch (error) {
-        message.success("交易更新成功（模拟）");
-        return { code: 200, message: "success" };
-      }
-    },
+    mutationFn: async (payload: Partial<AccountTransactionDto>) => (await transactionsApi.update(payload)).data,
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["transactions"] });
       setIsModalVisible(false);
@@ -189,15 +173,7 @@ export default function Transactions() {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: async (id: number) => {
-      try {
-        const response = await http.delete(`/accounttransaction/${id}`);
-        return response.data;
-      } catch (error) {
-        message.success("交易删除成功（模拟）");
-        return { code: 200, message: "success" };
-      }
-    },
+    mutationFn: async (id: number) => (await transactionsApi.remove(id)).data,
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["transactions"] });
       message.success("交易删除成功");

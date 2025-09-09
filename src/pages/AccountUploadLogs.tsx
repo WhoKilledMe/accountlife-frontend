@@ -4,6 +4,9 @@ import { Card, Button, Space, message, Upload, Table, Tag, Typography, Input, Se
 import type { UploadProps } from "antd";
 import { UploadOutlined, ArrowLeftOutlined } from "@ant-design/icons";
 import { http } from "../lib/http";
+import { accountsApi } from "../api/accounts";
+import { uploadApi } from "../api/upload";
+import { mailSyncApi } from "../api/mailsync";
 import { UploadLogStatusEnum, getEnumItemByKey } from "./enums";
 
 type LogDto = {
@@ -54,7 +57,7 @@ export default function AccountUploadLogs() {
     (async () => {
       if (selectedAccountId && !accountOptions.some(o => o.value === selectedAccountId)) {
         try {
-          const resp = await http.get(`/assetaccount/${selectedAccountId}`);
+          const resp = await accountsApi.get(selectedAccountId);
           const acc = resp.data as any;
           if (acc && acc.name) {
             setAccountOptions(prev => [{ label: acc.name, value: acc.id }, ...prev]);
@@ -151,10 +154,7 @@ export default function AccountUploadLogs() {
         }
         const form = new FormData();
         form.append("file", file);
-        await http.post(`/v1/file/upload`, form, {
-          headers: { "Content-Type": "multipart/form-data" },
-          params: { type: "BANK", accountId: modalAccountId },
-        });
+        await uploadApi.uploadFile(form, { type: "BANK", accountId: modalAccountId });
         message.success("上传成功");
         onSuccess?.({});
         fetchLogs();
@@ -173,7 +173,7 @@ export default function AccountUploadLogs() {
     }
     try {
       setSyncSubmitting(true);
-      await http.post(`/mailsync/email`, {
+      await mailSyncApi.sendEmail({
         mailDate: mailDate || undefined,
         mailSubject: mailSubject || undefined,
         sender: sender || undefined,

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Card, Form, Input, Button, Typography, message } from "antd";
 import { http } from "../lib/http";
+import { authApi } from "../api/auth";
 import { useNavigate, Navigate } from "react-router-dom";
 
 export default function Login() {
@@ -15,7 +16,7 @@ export default function Login() {
   const onFinish = async (values: { username: string; password: string }) => {
     setLoading(true);
     try {
-      const resp = await http.post("/auth/login", values);
+      const resp = await authApi.login(values);
       const jwt = resp.data?.token ?? resp.data?.data?.token;
       if (!jwt) {
         throw new Error("登录失败：未返回token");

@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { http } from "../lib/http";
+// import { http } from "../lib/http";
+import { uploadApi } from "../api/upload";
 
 export default function Upload() {
   const [file, setFile] = useState<File | null>(null);
@@ -18,10 +19,7 @@ export default function Upload() {
     try {
       const form = new FormData();
       form.append("file", file);
-      await http.post(`/v1/file/upload`, form, {
-        headers: { "Content-Type": "multipart/form-data" },
-        params: { type, accountName },
-      });
+      await uploadApi.uploadFile(form, { type, accountName });
       setMessage("上传成功");
     } catch (e: any) {
       setMessage(e?.message || "上传失败");

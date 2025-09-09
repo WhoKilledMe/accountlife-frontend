@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { http } from "../lib/http";
+// import { http } from "../lib/http";
+import { categoriesApi } from "../api/categories";
 import type { TransactionCategoryDto, PageResponse } from "../services/types";
 import { useMemo, useState, useEffect } from "react";
 import { Card, Input, Form, Space, message, Tag, Modal, Select } from "antd";
@@ -19,7 +20,7 @@ export default function Categories() {
   // 父分类选项（用于下拉选择）
   const { data: allCategories } = useQuery<TransactionCategoryDto[]>({
     queryKey: ["categories-all"],
-    queryFn: async () => (await http.get("/transactioncategory")).data,
+    queryFn: async () => (await categoriesApi.listAll()).data,
   });
 
   const parentOptions = useMemo(() => {
@@ -28,10 +29,7 @@ export default function Categories() {
   }, [allCategories]);
 
   const createMutation = useMutation({
-    mutationFn: async (payload: Partial<TransactionCategoryDto>) => {
-      const resp = await http.post("/transactioncategory", payload);
-      return resp.data;
-    },
+    mutationFn: async (payload: Partial<TransactionCategoryDto>) => (await categoriesApi.create(payload)).data,
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["categories-all"] });
       setIsModalVisible(false);
@@ -42,10 +40,7 @@ export default function Categories() {
   });
 
   const updateMutation = useMutation({
-    mutationFn: async (payload: Partial<TransactionCategoryDto>) => {
-      const resp = await http.put("/transactioncategory", payload);
-      return resp.data;
-    },
+    mutationFn: async (payload: Partial<TransactionCategoryDto>) => (await categoriesApi.update(payload)).data,
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["categories-all"] });
       setIsModalVisible(false);
@@ -56,7 +51,7 @@ export default function Categories() {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: async (id: number) => (await http.delete(`/transactioncategory/${id}`)).data,
+    mutationFn: async (id: number) => (await categoriesApi.remove(id)).data,
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["categories-all"] });
       message.success("分类删除成功");
@@ -179,10 +174,7 @@ export default function Categories() {
           columns={columns as any}
           fetchPage={async ({ page, pageSize }) => {
             try {
-              const resp = await http.post(
-                `/transactioncategory/page?page=${page - 1}&size=${pageSize}`,
-                searchText ? { name: searchText } : {}
-              );
+              const resp = await categoriesApi.page(page - 1, pageSize, searchText ? { name: searchText } : {});
               const pr = resp.data as PageResponse<TransactionCategoryDto>;
               return { items: pr.content ?? [], total: pr.totalElements ?? 0 };
             } catch (e) {

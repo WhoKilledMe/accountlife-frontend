@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { http } from "../lib/http";
+// import { http } from "../lib/http";
+import { budgetsApi } from "../api/budgets";
 import type { ApiResponse, BudgetDto } from "../services/types";
 import { useState } from "react";
 import { Card, Input, Form, Space, message, Statistic, Row, Col, Tag, Modal, Button } from "antd";
@@ -87,7 +88,7 @@ export default function Budgets() {
     queryKey: ["budgets", userId],
     queryFn: async () => {
       try {
-        const response = await http.get(`/budget/user/${userId}`);
+        const response = await budgetsApi.listByUser(userId);
         return response.data;
       } catch (error) {
         console.log("使用模拟数据，后端API暂时不可用");
@@ -102,16 +103,7 @@ export default function Budgets() {
   });
 
   const createMutation = useMutation({
-    mutationFn: async (payload: Partial<BudgetDto>) => {
-      try {
-        const response = await http.post(`/budget`, payload);
-        return response.data;
-      } catch (error) {
-        // 模拟创建成功
-        message.success("预算创建成功（模拟）");
-        return { code: 200, message: "success" };
-      }
-    },
+    mutationFn: async (payload: Partial<BudgetDto>) => (await budgetsApi.create(payload)).data,
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["budgets", userId] });
       setIsModalVisible(false);
@@ -121,16 +113,7 @@ export default function Budgets() {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: async (id: number) => {
-      try {
-        const response = await http.delete(`/budget/${id}`);
-        return response.data;
-      } catch (error) {
-        // 模拟删除成功
-        message.success("预算删除成功（模拟）");
-        return { code: 200, message: "success" };
-      }
-    },
+    mutationFn: async (id: number) => (await budgetsApi.remove(id)).data,
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["budgets", userId] });
       message.success("预算删除成功");

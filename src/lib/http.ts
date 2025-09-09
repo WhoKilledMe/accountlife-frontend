@@ -1,4 +1,5 @@
 import axios from "axios";
+import { message } from "antd";
 
 const API_BASE = (import.meta as any)?.env?.VITE_API_BASE || "/api";
 
@@ -12,6 +13,8 @@ http.interceptors.request.use((config) => {
   (config as any).metadata = { startTime: performance.now() };
   // attach required headers
   config.headers = config.headers || {};
+  // allow custom flags via config as any
+  (config as any).flags = (config as any).flags || {};
   // attach auth token if exists
   try {
     const token = localStorage.getItem("token");
@@ -33,6 +36,13 @@ http.interceptors.response.use(
     const url = `${resp.config?.baseURL || ""}${resp.config?.url || ""}`;
     // eslint-disable-next-line no-console
     console.log(`HTTP ${resp.status} ${resp.config?.method?.toUpperCase()} ${url} in ${durationMs.toFixed(0)}ms`);
+    try {
+      const method = (resp.config?.method || "").toUpperCase();
+      const autoToast = (resp.config as any)?.flags?.autoToast as boolean | undefined;
+      if (autoToast && (method === "POST" || method === "PUT" || method === "DELETE")) {
+        message.success("操作成功");
+      }
+    } catch (_) {}
     return resp;
   },
   (error) => {
@@ -43,15 +53,8 @@ http.interceptors.response.use(
       const status = error.response?.status ?? "ERR";
       // eslint-disable-next-line no-console
       console.warn(`HTTP ${status} ${error.config?.method?.toUpperCase()} ${url} failed in ${durationMs.toFixed(0)}ms`);
-      if (status === 401) {
-        try {
-          localStorage.removeItem("token");
-        } catch (_) {}
-        // redirect to login
-        if (typeof window !== "undefined") {
-          window.location.href = "/login";
-        }
-      }
+      const serverMsg = error?.response?.data?.message || error?.response?.data?.error || error.message;
+      message.error(serverMsg || "请求失败");
     } catch (_) {
       // noop
     }

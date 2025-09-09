@@ -1,7 +1,8 @@
 import { Card, Typography, DatePicker, Space, Table } from "antd";
 import type { Dayjs } from "dayjs";
 import { useMemo, useState } from "react";
-import { http } from "../lib/http";
+// import { http } from "../lib/http";
+import { businessApi } from "../api/business";
 
 type BusinessTransactionDto = {
   id: number;
@@ -36,7 +37,7 @@ export default function Businesses() {
         body.transactionStartDate = range[0].toISOString();
         body.transactionEndDate = range[1].toISOString();
       }
-      const resp = await http.post(`/businesstransaction/page?page=${curPage - 1}&size=${size}`, body);
+      const resp = await businessApi.page(curPage - 1, size, body);
       const pr = resp.data as any;
       setData(pr.content ?? []);
       setTotal(pr.totalElements ?? 0);

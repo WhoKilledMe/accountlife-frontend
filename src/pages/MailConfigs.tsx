@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Card, Form, Input, Button, Space, message, Switch, InputNumber } from "antd";
-import { http } from "../lib/http";
+// import { http } from "../lib/http";
+import { userMailConfigApi } from "../api/userMailConfig";
 import { notify } from "../lib/notify";
 
 type MailCfg = {
@@ -37,7 +38,7 @@ export default function MailConfigs() {
         const next = { ...editing, userId } as MailCfg;
         // query existing configs by user
         try {
-          const resp = await http.post(`/usermailconfig/query`, { userId });
+          const resp = await userMailConfigApi.queryByUser(userId);
           const list = (resp?.data?.data || resp?.data || []) as MailCfg[];
           const found = Array.isArray(list) ? list[0] : undefined;
           const merged = found ? { ...next, ...found } : next;
@@ -52,7 +53,7 @@ export default function MailConfigs() {
       } else {
         // no userId in URL: try to fetch current user's single config
         try {
-          const resp = await http.get(`/usermailconfig/me`);
+          const resp = await userMailConfigApi.me();
           const data = resp?.data?.data ?? resp?.data;
           if (data) {
             setEditing(data);
@@ -75,11 +76,11 @@ export default function MailConfigs() {
 
   const saveItem = async (values: MailCfg) => {
     // Always POST with id included; backend will upsert based on id
-    await http.post(`/usermailconfig`, { ...values, id: values?.id });
+    await userMailConfigApi.create({ ...values, id: values?.id });
   };
 
   const testConnectivity = async (values: MailCfg) => {
-    const resp = await http.post(`/usermailconfig/test`, values);
+    const resp = await userMailConfigApi.test(values);
     const d = resp?.data as any;
     const ok = d === true || d?.data === true || d?.success === true || d?.code === 0;
     notify.fromBoolean(ok, "连通性测试成功", "连通性测试失败");

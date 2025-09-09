@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { http } from "../lib/http";
+// import { http } from "../lib/http";
+import { keywordApi } from "../api/keywords";
 
 export default function Keywords() {
   const [keyword, setKeyword] = useState("");
@@ -11,7 +12,7 @@ export default function Keywords() {
     setLoading(true);
     setError(null);
     try {
-      const resp = await http.get(`/category-keywords/match`, { params: { keyword } });
+      const resp = await keywordApi.match(keyword);
       setResult(resp.data);
     } catch (e: any) {
       setError(e?.message || "请求失败");

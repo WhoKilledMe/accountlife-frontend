@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Card, Form, Input, Button, Space, Table, Modal, message, Switch, InputNumber } from "antd";
-import { http } from "../lib/http";
+// import { http } from "../lib/http";
+import { userMailConfigApi } from "../api/userMailConfig";
 
 type MailCfg = {
   id?: number;
@@ -34,7 +35,7 @@ export default function AdminMailConfigs() {
     try {
       const values = await form.validateFields().catch(() => ({}));
       const body = { ...values };
-      const resp = await http.post(`/usermailconfig/page?page=${p - 1}&size=${ps}`, body);
+      const resp = await userMailConfigApi.page(p - 1, ps, body);
       const pr = resp.data as any;
       setItems(pr.content ?? []);
       setTotal(pr.totalElements ?? 0);
@@ -50,14 +51,14 @@ export default function AdminMailConfigs() {
 
   const saveItem = async (values: MailCfg) => {
     if (editing?.id) {
-      await http.put(`/usermailconfig`, { ...values, id: editing.id });
+      await userMailConfigApi.update({ ...values, id: editing.id });
     } else {
-      await http.post(`/usermailconfig`, values);
+      await userMailConfigApi.create(values);
     }
   };
 
   const removeItem = async (id: number) => {
-    await http.delete(`/usermailconfig/${id}`);
+    await userMailConfigApi.remove(id);
   };
 
   useEffect(() => { fetchPage(1, pageSize); /* eslint-disable-line */ }, []);

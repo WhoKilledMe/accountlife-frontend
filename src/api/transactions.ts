@@ -11,6 +11,15 @@ export const transactionsApi = {
 
   // 列表（简单获取所有）
   list: () => http.get<AccountTransactionDto[]>(`/accounttransaction`),
+
+  create: (payload: Partial<AccountTransactionDto>) =>
+    http.post(`/accounttransaction`, payload, { flags: { autoToast: true } } as any),
+
+  update: (payload: Partial<AccountTransactionDto>) =>
+    http.put(`/accounttransaction`, payload, { flags: { autoToast: true } } as any),
+
+  remove: (id: number) =>
+    http.delete(`/accounttransaction/${id}`, { flags: { autoToast: true } } as any),
 };
 
 export const transactionCategoryApi = {

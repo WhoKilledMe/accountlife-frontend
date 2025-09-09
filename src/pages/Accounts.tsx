@@ -1,13 +1,14 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { http } from "../lib/http";
 import type { AssetAccountDto, AccountConfigDto } from "../services/types";
-import { useState } from "react";
-import { Card, Button, Input, Form, Space, message, Tag, Modal, Select, AutoComplete, Row, Col } from "antd";
+import { useState, useEffect } from "react";
+import { Card, Button, Input, Form, Space, message, Tag, Modal, Select, AutoComplete, Row, Col, Transfer, Pagination } from "antd";
 import { useNavigate } from "react-router-dom";
 import PaginatedTable from "../components/PaginatedTable";
-import { PlusOutlined, EyeOutlined, ImportOutlined, MailOutlined } from "@ant-design/icons";
+import { PlusOutlined, EyeOutlined, ImportOutlined } from "@ant-design/icons";
 import { CreateButton, EditButton, DeleteButton } from "../components/ActionButtons";
 import { accountConfigApi } from "../api/accountConfig";
+import { accountsApi } from "../api/accounts";
 import { AccountTypeEnum, getEnumItemByKey, toSelectOptions } from "./enums";
 
 export default function Accounts() {
@@ -17,11 +18,14 @@ export default function Accounts() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editingAccount, setEditingAccount] = useState<AssetAccountDto | null>(null);
   const [showAccountConfigSelector, setShowAccountConfigSelector] = useState(false);
-
-  const { data } = useQuery<AssetAccountDto[]>({
-    queryKey: ["accounts"],
-    queryFn: async () => (await http.get("/assetaccount")).data,
-  });
+  // AccountConfig transfer data state
+  const [configPage, setConfigPage] = useState(1);
+  const [configPageSize, setConfigPageSize] = useState(10);
+  const [configTotal, setConfigTotal] = useState(0);
+  const [configSearch, setConfigSearch] = useState("");
+  const [configDataSource, setConfigDataSource] = useState<any[]>([]);
+  const [selectedConfigKeys, setSelectedConfigKeys] = useState<string[]>([]);
+  const [selectedConfigs, setSelectedConfigs] = useState<AccountConfigDto[]>([]);
 
   const { data: accountConfigs } = useQuery<AccountConfigDto[]>({
     queryKey: ["accountConfigs"],
@@ -67,7 +71,7 @@ export default function Accounts() {
   const deleteMutation = useMutation({
     mutationFn: async (id: number) => {
       try {
-        const response = await http.delete(`/assetaccount/${id}`);
+        const response = await http.delete(`/assetaccount/${id}`, ({ params: {}, headers: {}, flags: { autoToast: true } } as any));
         return response.data;
       } catch (error) {
         message.success("账户删除成功（模拟）");
@@ -77,10 +81,10 @@ export default function Accounts() {
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["accounts"] });
       message.success("账户删除成功");
+      setTableKey((k) => k + 1);
     },
   });
 
-  const accounts = data || [];
   const [tableKey, setTableKey] = useState(0);
   const [searchText, setSearchText] = useState("");
 
@@ -117,6 +121,36 @@ export default function Accounts() {
     setShowAccountConfigSelector(false);
     message.success(`已从配置"${config.name}"导入平台代码和账单邮箱`);
   };
+
+  const loadAccountConfigPage = async (page: number, pageSize: number, keyword: string) => {
+    const resp = await accountConfigApi.page(page - 1, pageSize, { name: keyword || undefined });
+    const pr: any = resp.data;
+    const items: AccountConfigDto[] = pr.content ?? [];
+    setConfigTotal(pr.totalElements ?? 0);
+    const pageItems = items.map((c) => ({
+      key: String(c.id),
+      title: `${c.name} (${c.platformCode || '无代码'})` + (c.billEmail ? ` · ${c.billEmail}` : ''),
+      // 后端分页返回 isUsed 字段，用于置灰
+      disabled: Boolean((c as any).isUsed),
+      raw: c,
+    }));
+    // 将右侧已选项并入数据源，避免右侧受分页影响
+    const selectedItems = selectedConfigs.map((c) => ({
+      key: String(c.id),
+      title: `${c.name} (${c.platformCode || '无代码'})` + (c.billEmail ? ` · ${c.billEmail}` : ''),
+      disabled: Boolean((c as any).isUsed),
+      raw: c,
+    }));
+    const combinedMap = new Map<string, any>();
+    [...pageItems, ...selectedItems].forEach(item => combinedMap.set(item.key, item));
+    setConfigDataSource(Array.from(combinedMap.values()));
+  };
+
+  useEffect(() => {
+    if (showAccountConfigSelector) {
+      loadAccountConfigPage(configPage, configPageSize, configSearch);
+    }
+  }, [showAccountConfigSelector, configPage, configPageSize, configSearch]);
 
   const columns = [
     {
@@ -218,6 +252,12 @@ export default function Accounts() {
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <Space>
             <CreateButton icon={<PlusOutlined />} permKey="account:create" onClick={handleCreate}>新建账户</CreateButton>
+            <Button
+              icon={<ImportOutlined />}
+              onClick={() => setShowAccountConfigSelector(true)}
+            >
+              从系统账户配置导入
+            </Button>
           </Space>
           <Space>
             <Input.Search
@@ -241,16 +281,11 @@ export default function Accounts() {
           columns={columns as any}
           fetchPage={async ({ page, pageSize }) => {
             try {
-              const resp = await http.post(
-                `/assetaccount/page?page=${page - 1}&size=${pageSize}`,
-                searchText ? { name: searchText } : {}
-              );
+              const resp = await accountsApi.page(page - 1, pageSize, searchText ? { name: searchText } as any : {});
               const pr = resp.data as any;
               return { items: pr.content ?? [], total: pr.totalElements ?? 0 };
             } catch (e) {
-              // 后端不可用时，使用本地模拟+前端分页
-              const items = accounts.slice((page - 1) * pageSize, page * pageSize);
-              return { items, total: accounts.length };
+              return { items: [], total: 0 };
             }
           }}
           defaultPageSize={10}
@@ -373,48 +408,88 @@ export default function Accounts() {
         </Form>
       </Modal>
 
-      {/* 账户配置选择器 */}
+      {/* 账户配置选择器（分页 + 穿梭框） */}
       <Modal
-        title="从账户配置导入"
+        title="从系统账户配置导入"
         open={showAccountConfigSelector}
         onCancel={() => setShowAccountConfigSelector(false)}
-        footer={null}
+        onOk={async () => {
+          if (!selectedConfigKeys.length) { setShowAccountConfigSelector(false); return; }
+          // 多选批量创建账户（只回填第一个到表单便于继续编辑）
+          const selected = selectedConfigs;
+          try {
+            const payload = selected.map(c => ({
+              name: c.name,
+              type: c.type,
+              platformCode: c.platformCode,
+              billEmail: c.billEmail,
+              currency: "CNY",
+            }));
+            await accountsApi.batchCreate(payload);
+            message.success("已批量导入系统账户配置");
+            qc.invalidateQueries({ queryKey: ["accounts"] });
+            // 刷新左侧分页数据并清空右侧选择
+            setSelectedConfigKeys([]);
+            setSelectedConfigs([]);
+            await loadAccountConfigPage(configPage, configPageSize, configSearch);
+            // 刷新账户列表表格
+            setTableKey(k => k + 1);
+          } catch (e) {
+            // 即使后端不可用也不阻塞前端使用
+            message.success("已批量导入（模拟）");
+          }
+          // 回填第一个到弹窗表单，便于继续编辑细节
+          const first = selected[0];
+          if (first) {
+            handleImportFromConfig(first);
+          } else {
+            setShowAccountConfigSelector(false);
+          }
+        }}
+        okButtonProps={{ disabled: selectedConfigKeys.length === 0 }}
         width={800}
       >
-        <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
-          {accountConfigs?.filter(config => config.billEmail)?.map((config) => (
-            <Card
-              key={config.id}
+        <Space direction="vertical" style={{ width: '100%' }}>
+          <Input.Search
+            placeholder="搜索配置名称..."
+            allowClear
+            onSearch={(v) => { setConfigSearch(v); setConfigPage(1); }}
+          />
+          <Transfer
+            dataSource={configDataSource}
+            titles={["系统配置", "已选"]}
+            targetKeys={selectedConfigKeys}
+            render={(item) => item.title}
+            onChange={(nextTargetKeys) => {
+              const keys = nextTargetKeys as string[];
+              setSelectedConfigKeys(keys);
+              // 基于当前数据源和已缓存的选中项，稳定构建右侧选中集合
+              const cacheMap = new Map<string, AccountConfigDto>();
+              selectedConfigs.forEach(c => cacheMap.set(String(c.id), c));
+              configDataSource.forEach(d => {
+                if (d.raw) cacheMap.set(d.key, d.raw as AccountConfigDto);
+              });
+              const nextSelected = keys
+                .map(k => cacheMap.get(k))
+                .filter(Boolean) as AccountConfigDto[];
+              setSelectedConfigs(nextSelected);
+            }}
+            oneWay
+            showSelectAll={false}
+            listStyle={{ width: 340, height: 360 }}
+          />
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <div style={{ color: '#999' }}>共 {configTotal} 条</div>
+            <Pagination
               size="small"
-              style={{ marginBottom: '8px', cursor: 'pointer' }}
-              hoverable
-              onClick={() => handleImportFromConfig(config)}
-            >
-              <Row align="middle" justify="space-between">
-                <Col>
-                  <Space>
-                    <MailOutlined style={{ color: '#1890ff' }} />
-                    <div>
-                      <div style={{ fontWeight: 500 }}>{config.name}</div>
-                      <div style={{ fontSize: '12px', color: '#666' }}>
-                        平台代码: {config.platformCode || '无'} | 账单邮箱: {config.billEmail}
-                      </div>
-                    </div>
-                  </Space>
-                </Col>
-                <Col>
-                  <Button type="link" size="small">
-                    选择
-                  </Button>
-                </Col>
-              </Row>
-            </Card>
-          )) || (
-            <div style={{ textAlign: 'center', padding: '40px', color: '#999' }}>
-              暂无可用的账户配置
-            </div>
-          )}
-        </div>
+              current={configPage}
+              pageSize={configPageSize}
+              total={configTotal}
+              onChange={(p, ps) => { setConfigPage(p); setConfigPageSize(ps); }}
+              showSizeChanger
+            />
+          </div>
+        </Space>
       </Modal>
     </div>
   );

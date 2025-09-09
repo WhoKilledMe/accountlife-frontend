@@ -1,16 +1,16 @@
 import { useMemo, useState } from "react";
-import { Form, Input, Button, Space, Modal, message, Drawer, Descriptions } from "antd";
+import { Form, Input, Button, Space, Modal, message, Drawer, Descriptions, Card } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import type { UserGroupDto } from "../services/types";
 import { listUserGroups, createUserGroup, updateUserGroup, deleteUserGroup, getUserGroup } from "../api/userGroups";
-import FormCard from "../components/FormCard";
+import { PlusOutlined } from "@ant-design/icons";
+import { CreateButton, EditButton, DeleteButton } from "../components/ActionButtons";
 import PaginatedTable from "../components/PaginatedTable";
 
 export default function UserGroups() {
   const [form] = Form.useForm();
   const [editForm] = Form.useForm<UserGroupDto>();
 
-  const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [search, setSearch] = useState<{ name?: string }>({});
   const [tableKey, setTableKey] = useState(0);
@@ -47,68 +47,73 @@ export default function UserGroups() {
               }
             }}
           >查看</Button>
-          <Button
-            type="link"
-            onClick={() => {
-              setEditing(record);
-              editForm.setFieldsValue(record as any);
-              setEditOpen(true);
+          <EditButton permKey="userGroup:edit" onClick={() => {
+            setEditing(record);
+            editForm.setFieldsValue(record as any);
+            setEditOpen(true);
+          }} />
+          <DeleteButton
+            permKey="userGroup:delete"
+            onConfirm={async () => {
+              try {
+                await deleteUserGroup(record.id!);
+                message.success("已删除");
+                setTableKey((k) => k + 1);
+              } catch (e: any) {
+                message.error(e?.message || "删除失败");
+              }
             }}
-          >编辑</Button>
-          <Button
-            type="link"
-            danger
-            onClick={async () => {
-              Modal.confirm({
-                title: `确认删除用户组 #${record.id}?`,
-                onOk: async () => {
-                  try {
-                    await deleteUserGroup(record.id!);
-                    message.success("已删除");
-                    setTableKey((k) => k + 1);
-                  } catch (e: any) {
-                    message.error(e?.message || "删除失败");
-                  }
-                },
-              });
-            }}
-          >删除</Button>
+          />
         </Space>
       ),
     },
   ], [editForm]);
 
   return (
-    <div style={{ display: "grid", gap: 16 }}>
-      <FormCard>
-        <Form form={form} layout="inline" onFinish={(values) => { setSearch(values); setPage(1); setTableKey((k) => k + 1); }}>
-          <Form.Item name="name" label="组名称">
-            <Input allowClear placeholder="模糊搜索组名称" />
-          </Form.Item>
-          <Form.Item>
-            <Space>
-              <Button type="primary" htmlType="submit">查询</Button>
-              <Button onClick={() => { form.resetFields(); setSearch({}); setPage(1); setTableKey((k) => k + 1); }}>重置</Button>
-              <Button type="dashed" onClick={() => { setEditing(null); editForm.resetFields(); setEditOpen(true); }}>新建</Button>
-            </Space>
-          </Form.Item>
-        </Form>
-      </FormCard>
+    <div style={{ padding: "24px" }}>
+      <div style={{ marginBottom: "24px" }}>
+        <h2 style={{ margin: 0, fontSize: "24px", fontWeight: 600, color: "#1D1D1F" }}>
+          用户组管理
+        </h2>
+        <p style={{ margin: "8px 0 0 0", color: "#86868B", fontSize: "14px" }}>
+          管理用户组与权限设置
+        </p>
+      </div>
 
-      <div style={{ background: "#fff", padding: 0, borderRadius: 8 }}>
+      <Card style={{ marginBottom: "24px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <Space>
+            <CreateButton icon={<PlusOutlined />} permKey="userGroup:create" onClick={() => { setEditing(null); editForm.resetFields(); setEditOpen(true); }}>
+              新建用户组
+            </CreateButton>
+          </Space>
+          <Form form={form} layout="inline" onFinish={(values) => { setSearch(values); setTableKey((k) => k + 1); }}>
+            <Form.Item name="name" label="组名称">
+              <Input allowClear placeholder="模糊搜索组名称" style={{ width: 240 }} />
+            </Form.Item>
+            <Form.Item>
+              <Space>
+                <Button type="primary" htmlType="submit">查询</Button>
+                <Button onClick={() => { form.resetFields(); setSearch({}); setTableKey((k) => k + 1); }}>重置</Button>
+              </Space>
+            </Form.Item>
+          </Form>
+        </div>
+      </Card>
+
+      <Card>
         <PaginatedTable<UserGroupDto>
           key={tableKey}
           columns={columns}
           fetchPage={async ({ page: p, pageSize: ps }) => {
             const res = await listUserGroups({ page: p, pageSize: ps, ...search });
-            setPage(p);
             setPageSize(ps);
             return { items: res.items, total: res.total };
           }}
           defaultPageSize={pageSize}
           rowKey={(r) => String(r.id)}
         />
-      </div>
+      </Card>
 
       <Modal
         open={editOpen}
@@ -119,6 +124,7 @@ export default function UserGroups() {
         }}
         okText="保存"
         destroyOnClose
+        width={600}
       >
         <Form<UserGroupDto>
           form={editForm}
