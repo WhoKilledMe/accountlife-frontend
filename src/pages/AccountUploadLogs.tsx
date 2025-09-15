@@ -44,12 +44,15 @@ export default function AccountUploadLogs() {
     accountId && !isNaN(Number(accountId)) && Number(accountId) > 0 ? Number(accountId) : undefined
   );
   const [mailDate, setMailDate] = useState<string | undefined>(undefined);
-  const [mailSubject, setMailSubject] = useState<string | undefined>(undefined);
-  const [sender, setSender] = useState<string | undefined>(undefined);
+  const [mailSender, setMailSender] = useState<string | undefined>(undefined);
+  const [zipPassword, setZipPassword] = useState<string | undefined>(undefined);
   const [uploadVisible, setUploadVisible] = useState(false);
   const [syncVisible, setSyncVisible] = useState(false);
   const [modalAccountId, setModalAccountId] = useState<number | undefined>(undefined);
   const [syncSubmitting, setSyncSubmitting] = useState(false);
+  const [accountIdToMail, setAccountIdToMail] = useState<Record<number, string>>({});
+  const [editingZipPassword, setEditingZipPassword] = useState<Record<number, string>>({});
+  const [savingPassword, setSavingPassword] = useState<Record<number, boolean>>({});
   // forms reserved when we need validations in future; remove unused to avoid warnings
 
   // 确保从路由携带的账户ID能显示为名称
@@ -61,6 +64,12 @@ export default function AccountUploadLogs() {
           const acc = resp.data as any;
           if (acc && acc.name) {
             setAccountOptions(prev => [{ label: acc.name, value: acc.id }, ...prev]);
+            if (acc.billEmail) {
+              setAccountIdToMail(prev => ({ ...prev, [acc.id]: acc.billEmail }));
+              if (!mailSender) {
+                setMailSender(acc.billEmail);
+              }
+            }
           }
         } catch (_) {
           // ignore
@@ -104,7 +113,14 @@ export default function AccountUploadLogs() {
       const resp = await http.get(`/assetaccount/select`, { params: { page, size: 20, accountName: keyword } });
       const pr = resp.data as any;
       const opts = (pr.content || []).map((a: any) => ({ label: a.name, value: a.id }));
+      const mailMap: Record<number, string> = {};
+      (pr.content || []).forEach((a: any) => {
+        if (a && a.id != null && a.billEmail) {
+          mailMap[a.id] = a.billEmail;
+        }
+      });
       setAccountOptions(prev => append ? [...prev, ...opts] : opts);
+      setAccountIdToMail(prev => append ? { ...prev, ...mailMap } : mailMap);
       setAccountPage(page);
       const total = pr.totalElements ?? 0;
       const pageSize = pr.pageSize ?? 20;
@@ -123,6 +139,47 @@ export default function AccountUploadLogs() {
     return <Tag color={item?.color || "default"}>{item?.value || s || "-"}</Tag>;
   };
 
+  const saveZipPassword = async (logId: number, newPassword: string) => {
+    setSavingPassword(prev => ({ ...prev, [logId]: true }));
+    try {
+      await http.put(`/accounttransaction/uploadlog`, {
+        id: logId,
+        zipPassword: newPassword ? parseInt(newPassword) : null
+      });
+      message.success("解压密码已更新");
+      fetchLogs();
+      setEditingZipPassword(prev => {
+        const newState = { ...prev };
+        delete newState[logId];
+        return newState;
+      });
+    } catch (e: any) {
+      message.error(e?.message || "保存失败");
+    } finally {
+      setSavingPassword(prev => ({ ...prev, [logId]: false }));
+    }
+  };
+
+  const handleZipPasswordEdit = (logId: number, currentValue: number | null) => {
+    const newValue = currentValue ? String(currentValue) : "";
+    setEditingZipPassword(prev => ({ ...prev, [logId]: newValue }));
+  };
+
+  const handleZipPasswordSave = (logId: number) => {
+    const newPassword = editingZipPassword[logId];
+    if (newPassword !== undefined) {
+      saveZipPassword(logId, newPassword);
+    }
+  };
+
+  const handleZipPasswordCancel = (logId: number) => {
+    setEditingZipPassword(prev => {
+      const newState = { ...prev };
+      delete newState[logId];
+      return newState;
+    });
+  };
+
   const columns = useMemo(
     () => [
       { title: "ID", dataIndex: "id", key: "id", width: 80 },
@@ -133,12 +190,80 @@ export default function AccountUploadLogs() {
       ) },
       { title: "交易开始日期", dataIndex: "transactionStartDate", key: "transactionStartDate", width: 180, render: (v: string) => (v ? new Date(v).toLocaleString("zh-CN") : "-") },
       { title: "交易结束日期", dataIndex: "transactionEndDate", key: "transactionEndDate", width: 180, render: (v: string) => (v ? new Date(v).toLocaleString("zh-CN") : "-") },
-      { title: "解压密码", dataIndex: "zipPassword", key: "zipPassword", width: 120, render: (v: number) => (v == null ? "-" : String(v)) },
+      { 
+        title: "解压密码", 
+        dataIndex: "zipPassword", 
+        key: "zipPassword", 
+        width: 150, 
+        render: (v: number, record: LogDto) => {
+          const isCompleted = record.status === "COMPLETED" || record.status === "SUCCESS";
+          const isEditing = editingZipPassword[record.id] !== undefined;
+          const isLoading = savingPassword[record.id];
+          
+          if (isCompleted) {
+            return v == null ? "-" : String(v);
+          }
+          
+          if (isEditing) {
+            return (
+              <Input
+                size="small"
+                value={editingZipPassword[record.id]}
+                onChange={(e) => setEditingZipPassword(prev => ({ ...prev, [record.id]: e.target.value }))}
+                onBlur={() => {
+                  setTimeout(() => {
+                    handleZipPasswordSave(record.id);
+                  }, 50);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleZipPasswordSave(record.id);
+                  } else if (e.key === 'Escape') {
+                    e.preventDefault();
+                    handleZipPasswordCancel(record.id);
+                  }
+                }}
+                placeholder="输入密码"
+                disabled={isLoading}
+                autoFocus
+                style={{ width: 120 }}
+              />
+            );
+          }
+          
+          return (
+            <span
+              onDoubleClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleZipPasswordEdit(record.id, v);
+              }}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+              }}
+              style={{ 
+                cursor: 'pointer', 
+                padding: '4px 8px',
+                border: '1px solid transparent',
+                borderRadius: '4px',
+                display: 'inline-block',
+                minWidth: '40px',
+                userSelect: 'none'
+              }}
+              title="双击编辑"
+            >
+              {v == null ? "-" : String(v)}
+            </span>
+          );
+        }
+      },
       { title: "状态", dataIndex: "status", key: "status", width: 120, render: (v: string) => statusTag(v) },
       { title: "记录(成功/失败)", key: "counts", width: 160, render: (_: any, r: LogDto) => `${r.totalRecords || 0} (${r.successCount || 0}/${r.failureCount || 0})` },
       { title: "创建时间", dataIndex: "createdAt", key: "createdAt", width: 180, render: (v: string) => (v ? new Date(v).toLocaleString("zh-CN") : "-") },
     ],
-    []
+    [editingZipPassword, savingPassword]
   );
 
   const props: UploadProps = {
@@ -175,9 +300,9 @@ export default function AccountUploadLogs() {
       setSyncSubmitting(true);
       await mailSyncApi.sendEmail({
         mailDate: mailDate || undefined,
-        mailSubject: mailSubject || undefined,
-        sender: sender || undefined,
+        mailSender: mailSender || undefined,
         accountId: modalAccountId,
+        zipPassword: zipPassword || undefined,
       });
       message.success("邮箱同步已触发");
       fetchLogs();
@@ -280,14 +405,18 @@ export default function AccountUploadLogs() {
             placeholder="选择账户"
             style={{ width: "100%" }}
             value={modalAccountId}
-            onChange={(v) => setModalAccountId(v)}
+            onChange={(v) => {
+              setModalAccountId(v);
+              const mail = accountIdToMail[v];
+              if (mail) setMailSender(mail);
+            }}
             onSearch={(v) => { setAccountKeyword(v); loadAccounts(0, v, false); }}
             onFocus={() => loadAccounts(0, accountKeyword, false)}
             filterOption={false}
             options={accountOptions}
           />
-          <Input placeholder="邮件标题（可选）" allowClear value={mailSubject} onChange={(e) => setMailSubject(e.target.value)} />
-          <Input placeholder="发件人" allowClear value={sender} onChange={(e) => setSender(e.target.value)} />
+          <Input placeholder="邮箱（自动带出账户邮箱，可修改）" allowClear value={mailSender} onChange={(e) => setMailSender(e.target.value)} />
+          <Input placeholder="ZIP包密码（如有）" allowClear value={zipPassword} onChange={(e) => setZipPassword(e.target.value)} />
 
           <DatePicker
             style={{ width: "100%" }}

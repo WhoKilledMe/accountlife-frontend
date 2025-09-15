@@ -53,6 +53,16 @@ http.interceptors.response.use(
       const status = error.response?.status ?? "ERR";
       // eslint-disable-next-line no-console
       console.warn(`HTTP ${status} ${error.config?.method?.toUpperCase()} ${url} failed in ${durationMs.toFixed(0)}ms`);
+
+      // Handle unauthorized: clear token and redirect to login
+      if (status === 401) {
+        try { localStorage.removeItem("token"); } catch (_) {}
+        // avoid duplicate toasts during redirect
+        message.warning("请先登录");
+        window.location.href = "/login";
+        return Promise.reject(error);
+      }
+
       const serverMsg = error?.response?.data?.message || error?.response?.data?.error || error.message;
       message.error(serverMsg || "请求失败");
     } catch (_) {
